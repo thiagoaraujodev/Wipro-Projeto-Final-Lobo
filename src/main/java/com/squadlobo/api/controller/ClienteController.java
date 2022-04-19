@@ -69,15 +69,12 @@ public class ClienteController {
 		});
 		return errors;
 	}
-
 	@DeleteMapping("/{cpf}")
 	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
 		clienteService.deletar(cpf);
 		return ResponseEntity.noContent().build();
 	}
-
-	
-	
+		
 	@PutMapping("/{cpf}")
 	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {
 		Cliente obj1 = clienteService.update(cpf, obj);
