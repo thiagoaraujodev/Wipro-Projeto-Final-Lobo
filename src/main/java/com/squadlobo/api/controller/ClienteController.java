@@ -48,7 +48,7 @@ public class ClienteController {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping("/criar")
+	@PostMapping("/{criar}")
 	public ResponseEntity<String> Post(@RequestBody @Valid Cliente cliente) {
 //		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(cliente));
 
