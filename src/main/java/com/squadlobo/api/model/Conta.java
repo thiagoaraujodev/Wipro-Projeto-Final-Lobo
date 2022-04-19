@@ -1,42 +1,34 @@
 package com.squadlobo.api.model;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Conta {
+public class Conta implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column( nullable = false ) 
 	private String numeroConta;
-	
-	@Column( nullable = false ) 
 	private String tipoConta;
-	
-	@Column( nullable = false ) 
 	private Double limiteContaEspecial;
-	
-	@Column( nullable = false ) 
 	private String cartaoCredito;
-	
-	@Column( nullable = false ) 
 	private Double limiteCartaoCredito;
-	
-	@Column( nullable = false ) 
 	private char statusConta;
-	
-	@ManyToOne
-	@JoinColumn(name = "cliente_cpf", nullable = false)
+
+	@OneToOne
+	@JoinColumn(name = "cpf_cliente")
 	private Cliente cliente;
 
 	public Conta() {
 	}
 
-	public Conta(String numeroConta, String tipoConta, Double limiteContaEspecial,
-			String cartaoCredito, Double limiteCartaoCredito, char statusConta) {
+	public Conta(String numeroConta, String tipoConta, Double limiteContaEspecial, String cartaoCredito,
+			Double limiteCartaoCredito, char statusConta, Cliente cliente) {
 		super();
 		this.numeroConta = numeroConta;
 		this.tipoConta = tipoConta;
@@ -44,6 +36,7 @@ public class Conta {
 		this.cartaoCredito = cartaoCredito;
 		this.limiteCartaoCredito = limiteCartaoCredito;
 		this.statusConta = statusConta;
+		this.cliente = cliente;
 	}
 
 	public String getNumeroConta() {
@@ -68,6 +61,10 @@ public class Conta {
 
 	public char getStatusConta() {
 		return statusConta;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 	public boolean saque(String numeroConta, double saque) {
