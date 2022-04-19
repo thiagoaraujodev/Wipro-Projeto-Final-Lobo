@@ -11,7 +11,7 @@ import com.squadlobo.api.service.exceptions.NotFoundException;
 
 @Service
 public class ContaService {
-	
+
 	@Autowired
 	private ContaRepository contaRepository;
 
@@ -24,12 +24,13 @@ public class ContaService {
 				.orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
 	}
 
-	public Conta create(Conta obj) {	
-		
+	public Conta create(Conta obj) {
+
 		if (contaRepository.findById(obj.getNumeroConta()) == null) {
 			return contaRepository.save(obj);
+		} else {
+			return contaRepository.save(obj);
 		}
-		return contaRepository.save(obj);
 	}
 
 }

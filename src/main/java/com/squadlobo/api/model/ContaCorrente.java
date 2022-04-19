@@ -1,8 +1,10 @@
 package com.squadlobo.api.model;
 
+@SuppressWarnings("serial")
 public class ContaCorrente extends Conta {
 	
-	private static final long serialVersionUID = 1L;
+	
+	//private static final long serialVersionUID = 1L;
 
 	public ContaCorrente() {
 
@@ -15,7 +17,7 @@ public class ContaCorrente extends Conta {
 
 	@Override
 	public boolean saque(String numeroConta, double saque) {
-		double saldo = 0;// corrigir
+		double saldo = 0;// corrigir /**/
 
 		if (saque > 0.0 && saque <= saldo) {
 			return true;
