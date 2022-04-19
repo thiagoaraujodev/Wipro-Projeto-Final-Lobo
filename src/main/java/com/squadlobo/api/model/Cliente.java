@@ -1,5 +1,6 @@
 package com.squadlobo.api.model;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
@@ -11,8 +12,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-public class Cliente {	
-	
+public class Cliente  implements Serializable {	
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Size(min = 11, max=11, message = "O CPF deve conter 11 digitos!")
 	@CPF(message = "CPF inválido!")
@@ -29,8 +32,8 @@ public class Cliente {
 	private String telefone;
 
 	@Column( nullable = false ) 
-	private Double rendaMensal;
-	
+	private Double rendaMensal;		
+
 	public Cliente() {		
 	}
 	
@@ -80,5 +83,5 @@ public class Cliente {
 
 	public void setRendaMensal(Double rendaMensal) {
 		this.rendaMensal = rendaMensal;
-	}	
+	}
 }
