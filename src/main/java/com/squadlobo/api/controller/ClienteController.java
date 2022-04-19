@@ -13,17 +13,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.squadlobo.api.model.Cliente;
+import com.squadlobo.api.repository.ClienteRepository;
 import com.squadlobo.api.service.ClienteService;
 
 @RestController
@@ -66,5 +68,19 @@ public class ClienteController {
 			errors.put(fieldName, errorMessage);
 		});
 		return errors;
+	}
+
+	@DeleteMapping("/{cpf}")
+	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
+		clienteService.deletar(cpf);
+		return ResponseEntity.noContent().build();
+	}
+
+	
+	
+	@PutMapping("/{cpf}")
+	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {
+		Cliente obj1 = clienteService.update(cpf, obj);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
 	}
 }
