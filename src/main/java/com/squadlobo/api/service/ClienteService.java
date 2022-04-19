@@ -31,8 +31,7 @@ public class ClienteService {
 		cliente.setNome(obj.getNome());
 		cliente.setTelefone(obj.getTelefone());
 		cliente.setDataNascimento(obj.getDataNascimento());
-		
-			return clienteRepository.save(cliente);
+		return clienteRepository.save(cliente);
 		}
 	
 	public void deletar(String cpf) {
