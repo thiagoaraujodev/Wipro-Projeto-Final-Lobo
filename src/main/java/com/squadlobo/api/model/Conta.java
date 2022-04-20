@@ -3,7 +3,6 @@ package com.squadlobo.api.model;
 import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
 import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 
-import java.io.Serializable;
 
 import javax.persistence.*;
 
