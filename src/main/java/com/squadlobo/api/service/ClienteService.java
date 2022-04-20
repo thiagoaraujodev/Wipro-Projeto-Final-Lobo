@@ -12,19 +12,19 @@ import com.squadlobo.api.service.exceptions.NotFoundException;
 @Service
 public class ClienteService {
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-	public List<Cliente> findAll() {
-		return clienteRepository.findAll();
-	}
+    public List<Cliente> findAll() {
+        return clienteRepository.findAll();
+    }
 
-	public Cliente findById(String cpf) {
-		return clienteRepository.findById(cpf)
-				.orElseThrow(() -> new NotFoundException("CPF: " + cpf + " não encontado!"));
-	}
+    public Cliente findById(String cpf) {
+        return clienteRepository.findById(cpf)
+                .orElseThrow(() -> new NotFoundException("CPF: " + cpf + " não encontado!"));
+    }
 
-	public Cliente create(Cliente obj) {		
-		return clienteRepository.save(obj);		
-	}
+    public Cliente create(Cliente obj) {
+        return clienteRepository.save(obj);
+    }
 }
