@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -69,18 +70,16 @@ public class ClienteController {
 		});
 		return errors;
 	}
-
-	@DeleteMapping("/{cpf}")
-	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
-		clienteService.deletar(cpf);
+	@DeleteMapping("/{cpf}")/*mapeia a URL*/
+	@ResponseBody /*descrição da resposta*/
+	public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
+		clienteService.delete(cpf);
 		return ResponseEntity.noContent().build();
 	}
-
-	
-	
-	@PutMapping("/{cpf}")
-	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {
-		Cliente obj1 = clienteService.update(cpf, obj);
+		
+	@PutMapping("/{cpf}")/*mapeia a URL*/
+	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {/*recebe os dados para alteração*/
+		Cliente obj1 = clienteService.update(cpf, obj);/*faz alteração do cliente*/
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
 	}
 }
