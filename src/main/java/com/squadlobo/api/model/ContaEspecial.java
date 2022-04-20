@@ -1,26 +1,55 @@
 package com.squadlobo.api.model;
 
+import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
+
+@Entity
 public class ContaEspecial extends Conta {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ContaEspecial() {
+    private Double limiteContaEspecial;
+    private Double limiteUtilizado;
 
-	}
+    @OneToMany(mappedBy = "contaEspecial")
+    private List<MovimentacaoContaEspecial> movimentacoes;
 
-	public ContaEspecial(String numeroConta, String tipoConta, Double limiteContaEspecial, String cartaoCredito,
-			Double limiteCartaoCredito, char statusConta, Cliente cliente) {
-		super(numeroConta, tipoConta, limiteContaEspecial, cartaoCredito, limiteCartaoCredito, statusConta, cliente);
-	}
 
-	@Override
-	public boolean saque(String numeroConta, double saque) {
-		double saldo = 0;// corrigir
-		double limiteEspecial = getLimiteContaEspecial();
+    public Double getLimiteContaEspecial() {
+        return limiteContaEspecial;
+    }
 
-		if (saque > 0.0 && saque <= (saldo + limiteEspecial)) {
-			return true;
-		}
-		return false;
-	}
+    public void setLimiteContaEspecial(Double limiteContaEspecial) {
+        this.limiteContaEspecial = limiteContaEspecial;
+    }
+
+    public Double getLimiteUtilizado() {
+        return limiteUtilizado;
+    }
+
+    public void setLimiteUtilizado(Double limiteUtilizado) {
+        this.limiteUtilizado = limiteUtilizado;
+    }
+
+    public List<MovimentacaoContaEspecial> getMovimentacoes() {
+        return movimentacoes;
+    }
+
+    public void setMovimentacoes(List<MovimentacaoContaEspecial> movimentacoes) {
+        this.movimentacoes = movimentacoes;
+    }
+
+    @Override
+    public void sacar(Double valor) throws SaldoInsuficienteException {
+
+    }
+
+    @Override
+    public void depositar(Double valor) throws DepositoInvalidoException {
+
+    }
 }

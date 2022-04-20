@@ -1,26 +1,36 @@
 package com.squadlobo.api.model;
 
+import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
+
+@Entity
 public class ContaCorrente extends Conta {
-	
-	private static final long serialVersionUID = 1L;
 
-	public ContaCorrente() {
+    private static final long serialVersionUID = 1L;
 
-	}
 
-	public ContaCorrente(String numeroConta, String tipoConta, Double limiteContaEspecial, String cartaoCredito,
-			Double limiteCartaoCredito, char statusConta, Cliente cliente) {
-		super(numeroConta, tipoConta, limiteContaEspecial, cartaoCredito, limiteCartaoCredito, statusConta, cliente);
-	}
+    @OneToMany(mappedBy = "contaCorrente")
+    private List<MovimentacaoContaCorrente> movimentacoes;
 
-	@Override
-	public boolean saque(String numeroConta, double saque) {
-		double saldo = 0;// corrigir
+    @Override
+    public void sacar(Double valor) throws SaldoInsuficienteException {
 
-		if (saque > 0.0 && saque <= saldo) {
-			return true;
-		}
-		return false;
-	}
+    }
 
+    @Override
+    public void depositar(Double valor) throws DepositoInvalidoException {
+
+    }
+
+    public List<MovimentacaoContaCorrente> getMovimentacoes() {
+        return movimentacoes;
+    }
+
+    public void setMovimentacoes(List<MovimentacaoContaCorrente> movimentacoes) {
+        this.movimentacoes = movimentacoes;
+    }
 }
