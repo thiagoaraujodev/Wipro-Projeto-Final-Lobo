@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.squadlobo.api.service.exceptions.NotFoundException;
 
-
 public class ControllerException {
 	
 	@ExceptionHandler(NotFoundException.class)

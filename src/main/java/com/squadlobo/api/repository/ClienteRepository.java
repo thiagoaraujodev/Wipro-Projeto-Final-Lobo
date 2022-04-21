@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.squadlobo.api.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, String>{
+public interface ClienteRepository extends JpaRepository<Cliente, String> {
 
+    Long countByCpf(String cpf);
 }

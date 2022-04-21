@@ -1,84 +1,49 @@
 package com.squadlobo.api.model;
 
-import java.io.Serializable;
+import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
-@SuppressWarnings("serial")
-@Entity
-public class Conta implements Serializable {
+import javax.persistence.*;
 
-	//private static final long serialVersionUID = 1L;
+@MappedSuperclass
+public abstract class Conta implements Serializable {
 
-	@Id
-	private String numeroConta;
-	private String tipoConta;
-	private Double limiteContaEspecial;
-	private String cartaoCredito;
-	private Double limiteCartaoCredito;
-	private char statusConta;
+    private static final long serialVersionUID = 1L;
 
-	@OneToOne
-	@JoinColumn(name = "cpf_cliente")
-	private Cliente cliente;
+    @Id
+    private Long numeroConta;
+    private Double saldo;
 
-	public Conta() {
-	}
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cpf_cliente")
+    private Cliente cliente;
 
-	public Conta(String numeroConta, String tipoConta, Double limiteContaEspecial, String cartaoCredito,
-			Double limiteCartaoCredito, char statusConta, Cliente cliente) {
-		super();
-		this.numeroConta = numeroConta;
-		this.tipoConta = tipoConta;
-		this.limiteContaEspecial = limiteContaEspecial;
-		this.cartaoCredito = cartaoCredito;
-		this.limiteCartaoCredito = limiteCartaoCredito;
-		this.statusConta = statusConta;
-		this.cliente = cliente;
-	}
+    public Long getNumeroConta() {
+        return numeroConta;
+    }
 
-	public String getNumeroConta() {
-		return numeroConta;
-	}
+    public void setNumeroConta(Long numeroConta) {
+        this.numeroConta = numeroConta;
+    }
 
-	public String getTipoConta() {
-		return tipoConta;
-	}
+    public Double getSaldo() {
+        return saldo;
+    }
 
-	public Double getLimiteContaEspecial() {
-		return limiteContaEspecial;
-	}
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
 
-	public String getCartaoCredito() {
-		return cartaoCredito;
-	}
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-	public Double getLimiteCartaoCredito() {
-		return limiteCartaoCredito;
-	}
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
-	public char getStatusConta() {
-		return statusConta;
-	}
+    public abstract void sacar(Double valor) throws SaldoInsuficienteException;
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public boolean saque(String numeroConta, double saque) {
-		return false;
-	}
-
-	public boolean deposito(String numeroConta, double deposito) {
-		// double saldo = getSaldoConta();
-		if (deposito > 0) {
-			// saldo += deposito;
-			// atualizaSaldo(saldo)
-			return true;
-		}
-		return false;
-	}
+    public abstract void depositar(Double valor) throws DepositoInvalidoException;
 }
