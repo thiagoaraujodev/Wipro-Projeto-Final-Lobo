@@ -11,6 +11,8 @@ public abstract class Conta  {
     @Id
     private String numeroConta;
     private Double saldo;
+    private String cartaoCredito;
+	private Double limiteCartaoCredito;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cpf_cliente")
@@ -30,9 +32,25 @@ public abstract class Conta  {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
-    }
+    }    
 
-    public Cliente getCliente() {
+    public String getCartaoCredito() {
+		return cartaoCredito;
+	}
+
+	public void setCartaoCredito(String cartaoCredito) {
+		this.cartaoCredito = cartaoCredito;
+	}
+
+	public Double getLimiteCartaoCredito() {
+		return limiteCartaoCredito;
+	}
+
+	public void setLimiteCartaoCredito(Double limiteCartaoCredito) {
+		this.limiteCartaoCredito = limiteCartaoCredito;
+	}
+
+	public Cliente getCliente() {
         return cliente;
     }
 
