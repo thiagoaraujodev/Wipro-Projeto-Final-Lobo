@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ClienteDTO {
 
     @Id
@@ -18,6 +20,7 @@ public class ClienteDTO {
     @NotBlank(message = "O nome não pode ser nulo ou vazio!")
     private String nome;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     @Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")

@@ -4,15 +4,26 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.Random;
 
-import com.squadlobo.api.dto.ContaRequestDTO;
-import com.squadlobo.api.dto.MovimentacaoDTO;
-import com.squadlobo.api.mapper.ContaMapper;
-import com.squadlobo.api.model.*;
-import com.squadlobo.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+
+import com.squadlobo.api.dto.ContaRequestDTO;
+import com.squadlobo.api.dto.MovimentacaoDTO;
+import com.squadlobo.api.mapper.ContaMapper;
+import com.squadlobo.api.model.Conta;
+import com.squadlobo.api.model.ContaCorrente;
+import com.squadlobo.api.model.ContaEspecial;
+import com.squadlobo.api.model.Movimentacao;
+import com.squadlobo.api.model.MovimentacaoContaCorrente;
+import com.squadlobo.api.model.MovimentacaoContaEspecial;
+import com.squadlobo.api.model.TipoMovimentacao;
+import com.squadlobo.api.repository.ClienteRepository;
+import com.squadlobo.api.repository.ContaCorrenteRepository;
+import com.squadlobo.api.repository.ContaEspecialRepository;
+import com.squadlobo.api.repository.ContaRepository;
+import com.squadlobo.api.repository.MovimentacaoRepository;
 import com.squadlobo.api.service.exceptions.NotFoundException;
 
 @Service
@@ -25,15 +36,18 @@ public class ContaService {
 
     @Autowired
     private ContaRepository contaRepository;
-
+    
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
     private ContaEspecialRepository contaEspecialRepository;
 
     @Autowired
     private ContaCorrenteRepository contaCorrenteRepository;
+    
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
 
     @Autowired
     private ContaMapper mapper;
@@ -67,10 +81,7 @@ public class ContaService {
         movimentacao.setDataHoraMovimentacao(ZonedDateTime.now());
         movimentacao.setValor(valor);
         movimentacaoRepository.save(movimentacao);
-    }
-
-    @Autowired
-    private ClienteRepository clienteRepository;
+    }    
 
     public Conta findById(String numeroConta) {
         return contaRepository.findById(numeroConta)
@@ -93,24 +104,26 @@ public class ContaService {
         return conta;
     }
 
-    public Conta create(ContaRequestDTO conta) {
-        Conta contaNova = null;
-        validarCpf(conta.getCliente().getCpf());
+    public Conta create(ContaRequestDTO contaDTO) {
+        validarCpf(contaDTO.getCliente().getCpf());
         
-        if (conta.getCliente().getRendaMensal() >= tetoContaEspecial) {
-            ContaEspecial contaEspecial = mapper.toContaEspecial(conta);
-            contaEspecial.setLimiteUtilizado(0.0);
+        Conta novaConta = null;        
+        if (contaDTO.getCliente().getRendaMensal() >= tetoContaEspecial) {
+            ContaEspecial contaEspecial = mapper.toContaEspecial(contaDTO);
             contaEspecial.setLimiteContaEspecial(gerarLimiteContaEspecial
-                    (conta.getCliente().getRendaMensal()));
-            contaNova = contaEspecial;
-            contaNova.setNumeroConta(gerarNumeroConta(contaEspecialRepository));
+                    (contaDTO.getCliente().getRendaMensal()));
+            contaEspecial.setLimiteUtilizado(0.0);
+            novaConta = contaEspecial;
+            novaConta.setNumeroConta(gerarNumeroConta(contaEspecialRepository));
         } else {
-            contaNova = mapper.toContaCorrente(conta);
-            contaNova.setNumeroConta(gerarNumeroConta(contaCorrenteRepository));
+            novaConta = mapper.toContaCorrente(contaDTO);
+            novaConta.setNumeroConta(gerarNumeroConta(contaCorrenteRepository));
         }
-        contaNova.setSaldo(0d);
-        contaRepository.save(contaNova);
-        return contaNova;
+        novaConta.setSaldo(0d);        
+        novaConta.setCartaoCredito(gerarNumeroCartao());
+		novaConta.setLimiteCartaoCredito(gerarLimiteCartao(contaDTO.getCliente().getRendaMensal()));
+        contaRepository.save(novaConta);
+        return novaConta;
     }
 
     private void validarCpf(String cpf) {
@@ -131,26 +144,26 @@ public class ContaService {
     }
 
     public Double gerarLimiteContaEspecial(Double renda) {
-        Double limite = 0.0;
+        Double limite = 0d;
         if (renda >= tetoContaEspecial) {
-            limite = renda * 0.4;
+            limite = renda * 0.1;
         }
         return limite;
     }
 
-//    private String gerarNumeroCartao() {
-//		
-//		String numeracao = "55";
-//		for (int i = 0; i < 14; i++) {
-//			numeracao += Integer.toString(random.nextInt(9));
-//			if(i == 1 || i == 5 || i == 9) {
-//				numeracao += " ";
-//			}
-//		}
-//		return numeracao;
-//	}
+    private String gerarNumeroCartao() {
+		
+		String numeracao = "55";
+		for (int i = 0; i < 14; i++) {
+			numeracao += Integer.toString(random.nextInt(9));
+			if(i == 1 || i == 5 || i == 9) {
+				numeracao += " ";
+			}
+		}
+		return numeracao;
+	}
 
-//    public Double gerarLimiteCartao(double renda) {
-//		return renda*0.30;		
-//	}
+    public Double gerarLimiteCartao(Double renda) {
+		return renda*0.30;		
+	}
 }

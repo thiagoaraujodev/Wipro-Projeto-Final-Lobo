@@ -10,9 +10,6 @@ import java.util.List;
 @Entity
 public class ContaCorrente extends Conta {
 
-    private static final long serialVersionUID = 1L;
-
-
     @OneToMany(mappedBy = "contaCorrente")
     private List<MovimentacaoContaCorrente> movimentacoes;
 
