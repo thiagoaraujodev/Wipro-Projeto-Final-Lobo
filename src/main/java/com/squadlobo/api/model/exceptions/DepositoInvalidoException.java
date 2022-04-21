@@ -1,4 +1,4 @@
 package com.squadlobo.api.model.exceptions;
 
-public class DepositoInvalidoException extends Exception {
+public class DepositoInvalidoException extends RuntimeException {
 }
