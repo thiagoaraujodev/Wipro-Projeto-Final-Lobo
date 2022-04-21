@@ -18,12 +18,19 @@ public class ContaCorrente extends Conta {
 
     @Override
     public void sacar(Double valor) throws SaldoInsuficienteException {
-
+        if (getSaldo() >= valor) {
+            //calcula o valor do novo saldo
+            Double novoSaldo = getSaldo() - valor;
+            //atualiza o saldo
+            setSaldo(novoSaldo);
+        } else {
+            throw new SaldoInsuficienteException();
+        }
     }
 
     @Override
     public void depositar(Double valor) throws DepositoInvalidoException {
-
+        setSaldo(getSaldo() + valor);
     }
 
     public List<MovimentacaoContaCorrente> getMovimentacoes() {
