@@ -13,18 +13,18 @@ public abstract class Conta implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long numeroConta;
+    private String numeroConta;
     private Double saldo;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cpf_cliente")
     private Cliente cliente;
 
-    public Long getNumeroConta() {
+    public String getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(Long numeroConta) {
+    public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
     }
 

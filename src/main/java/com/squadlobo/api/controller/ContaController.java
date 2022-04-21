@@ -45,7 +45,6 @@ public class ContaController {
 
 	@PostMapping("/criar")
 	public ContaResponseDTO criar(@RequestBody @Valid ContaRequestDTO conta) {
-//		return ResponseEntity.status(HttpStatus.CREATED).body(contaService.create(conta));
 		Conta newObj = contaService.create(conta);
 		return mapper.toContaResponseDto(newObj);
 	}

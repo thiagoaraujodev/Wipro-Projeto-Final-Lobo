@@ -1,14 +1,12 @@
 package com.squadlobo.api.dto;
 
-import org.hibernate.validator.constraints.br.CPF;
+import java.time.LocalDate;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 
+import org.hibernate.validator.constraints.br.CPF;
 
 public class ClienteDTO {
 
@@ -25,8 +23,8 @@ public class ClienteDTO {
     @Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
     @NotBlank(message = "O telefone não pode ser nulo ou vazio!")
     private String telefone;
+    
     private Double rendaMensal;
-
 
     public String getCpf() {
         return cpf;
