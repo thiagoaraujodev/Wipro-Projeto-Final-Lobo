@@ -38,7 +38,7 @@ public class ContaController {
 	}
 
 	@GetMapping("/{numeroConta}")
-	public ResponseEntity<Conta> GetById(@PathVariable @Valid Long numeroConta) {
+	public ResponseEntity<Conta> GetById(@PathVariable @Valid String numeroConta) {
 		Conta obj = contaService.findById(numeroConta);
 		return ResponseEntity.ok(obj);
 	}
