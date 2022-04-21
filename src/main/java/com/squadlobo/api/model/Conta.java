@@ -3,13 +3,10 @@ package com.squadlobo.api.model;
 import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
 import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 
-
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class Conta implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public abstract class Conta  {
 
     @Id
     private String numeroConta;
@@ -46,4 +43,5 @@ public abstract class Conta implements Serializable {
     public abstract void sacar(Double valor) throws SaldoInsuficienteException;
 
     public abstract void depositar(Double valor) throws DepositoInvalidoException;
+
 }
