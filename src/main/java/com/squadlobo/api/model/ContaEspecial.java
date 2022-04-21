@@ -10,8 +10,6 @@ import java.util.List;
 @Entity
 public class ContaEspecial extends Conta {
 
-    private static final long serialVersionUID = 1L;
-
     private Double limiteContaEspecial;
     private Double limiteUtilizado;
 
