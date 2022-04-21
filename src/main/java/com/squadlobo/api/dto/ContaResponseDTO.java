@@ -2,13 +2,13 @@ package com.squadlobo.api.dto;
 
 public class ContaResponseDTO extends ContaRequestDTO {
 
-    private Long numeroConta;
+    private String numeroConta;
 
-    public Long getNumeroConta() {
+    public String getNumeroConta() {
         return numeroConta;
     }
 
-    public void setNumeroConta(Long numeroConta) {
+    public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
     }
 }
