@@ -7,6 +7,6 @@ import com.squadlobo.api.model.Conta;
 
 
 @Repository
-public interface ContaRepository extends JpaRepository<Conta, Long> {
+public interface ContaRepository extends JpaRepository<Conta, String> {
 
 }

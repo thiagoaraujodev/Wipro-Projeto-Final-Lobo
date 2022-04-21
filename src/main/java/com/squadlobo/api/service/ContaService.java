@@ -35,7 +35,7 @@ public class ContaService {
         return contaRepository.findAll();
     }
 
-    public Conta findById(Long numeroConta) {
+    public Conta findById(String numeroConta) {
         return contaRepository.findById(numeroConta)
                 .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
     }
@@ -46,7 +46,8 @@ public class ContaService {
         
         if (conta.getCliente().getRendaMensal() >= tetoContaEspecial) {
             ContaEspecial contaEspecial = mapper.toContaEspecial(conta);
-            contaEspecial.setLimiteContaEspecial(100.00);
+            contaEspecial.setLimiteContaEspecial(gerarLimiteContaEspecial
+                    (conta.getCliente().getRendaMensal()));
             contaNova = contaEspecial;
         } else {
             contaNova = mapper.toContaCorrente(conta);
@@ -65,13 +66,24 @@ public class ContaService {
     }
     
     private String gerarNumeroConta() {
-		String numeracao = "";
-		for (int i = 0; i < 5; i++) {
-			numeracao += Integer.toString(random.nextInt(9));
-		}
-		return numeracao;
-	}
-    
+        String numeracao = "";
+        for (int i = 0; i < 5; i++) {
+            numeracao += Integer.toString(random.nextInt(9));
+        }
+        if (contaRepository.existsById(numeracao)) {
+            numeracao = gerarNumeroConta();
+        }
+        return numeracao;
+    }
+
+    public Double gerarLimiteContaEspecial(Double renda) {
+        Double limite = 0.0;
+        if (renda >= tetoContaEspecial) {
+            limite = renda * 0.4;
+        }
+        return limite;
+    }
+
 //    private String gerarNumeroCartao() {
 //		
 //		String numeracao = "55";
@@ -83,14 +95,7 @@ public class ContaService {
 //		}
 //		return numeracao;
 //	}
-    
-//    public Double gerarLimiteContaEspecial(double renda) {		
-//		if(renda >= 2000.0) {
-//			return renda*0.1;
-//		}
-//		return 0.0;		
-//	}
-//    
+
 //    public Double gerarLimiteCartao(double renda) {
 //		return renda*0.30;		
 //	}
