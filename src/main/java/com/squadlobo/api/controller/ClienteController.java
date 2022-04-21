@@ -48,16 +48,6 @@ public class ClienteController {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PostMapping("/{criar}")
-	public ResponseEntity<String> Post(@RequestBody @Valid Cliente cliente) {
-//		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(cliente));
-
-		Cliente newObj = clienteService.create(cliente);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cpf}").buildAndExpand(newObj.getCpf())
-				.toUri();
-		return ResponseEntity.created(uri).build();
-	}
-
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
