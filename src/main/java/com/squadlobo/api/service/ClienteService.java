@@ -42,7 +42,7 @@ public class ClienteService {
     }
     
     public  Cliente alterar(String cpf, Cliente obj) {
-    	Cliente client = findById(cpf);
+    	Cliente client = buscarCpf(cpf);
     	client.setNome(obj.getNome());
     	client.setDataNascimento(obj.getDataNascimento());
     	client.setTelefone(obj.getTelefone());
