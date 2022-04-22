@@ -12,30 +12,30 @@ import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 @Service
 public class ClienteService {
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-	public List<Cliente> listarClientes() {
-		return clienteRepository.findAll();
-	}
+    public List<Cliente> listarClientes() {
+        return clienteRepository.findAll();
+    }
 
-	public Cliente buscarCpf(String cpf) {
-		return clienteRepository.findById(cpf)
-				.orElseThrow(() -> new ObjetoNaoEncontradoException("CPF não encontado!"));
-	}
+    public Cliente buscarCpf(String cpf) {
+        return clienteRepository.findById(cpf)
+                .orElseThrow(() -> new ObjetoNaoEncontradoException("CPF não encontado!"));
+    }
 
-	public Cliente atualizarCliente(String cpf, Cliente obj) {
-		Cliente cliente = buscarCpf(cpf);
-		cliente.setNome(obj.getNome());
-		cliente.setDataNascimento(obj.getDataNascimento());
-		cliente.setTelefone(obj.getTelefone());
-		cliente.setRendaMensal(obj.getRendaMensal());
-		return clienteRepository.save(obj);
-	}
+    public Cliente atualizarCliente(String cpf, Cliente obj) {
+        Cliente cliente = buscarCpf(cpf);
+        cliente.setNome(obj.getNome());
+        cliente.setDataNascimento(obj.getDataNascimento());
+        cliente.setTelefone(obj.getTelefone());
+        cliente.setRendaMensal(obj.getRendaMensal());
+        return clienteRepository.save(obj);
+    }
 
-	public Cliente deletar(String cpf) {
-		buscarCpf(cpf);
-		return clienteRepository.getById(cpf);
-	}
+    public Cliente deletar(String cpf) {
+        buscarCpf(cpf);
+        return clienteRepository.getById(cpf);
+    }
 
 }
