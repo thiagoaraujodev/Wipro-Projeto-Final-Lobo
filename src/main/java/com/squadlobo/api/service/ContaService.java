@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.squadlobo.api.model.TipoConta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -129,11 +130,6 @@ public class ContaService {
         movimentacao.setDataHoraMovimentacao(ZonedDateTime.now());
         movimentacao.setValor(valor);
         movimentacaoRepository.save(movimentacao);
-    }    
-
-    public Conta findById(String numeroConta) {
-        return contaRepository.findById(numeroConta)
-                .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
     }
 
     public Conta recuperarConta(String numeroConta) {
@@ -161,10 +157,12 @@ public class ContaService {
             contaEspecial.setLimiteContaEspecial(gerarLimiteContaEspecial
                     (contaDTO.getCliente().getRendaMensal()));
             contaEspecial.setLimiteUtilizado(0.0);
+            contaEspecial.setTipoConta(TipoConta.ESPECIAL);
             novaConta = contaEspecial;
             novaConta.setNumeroConta(gerarNumeroConta(contaEspecialRepository));
         } else {
             novaConta = mapper.toContaCorrente(contaDTO);
+            novaConta.setTipoConta(TipoConta.CORRENTE);
             novaConta.setNumeroConta(gerarNumeroConta(contaCorrenteRepository));
         }
         novaConta.setSaldo(0d);        

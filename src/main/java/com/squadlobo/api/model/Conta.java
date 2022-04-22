@@ -13,6 +13,7 @@ public abstract class Conta  {
     private Double saldo;
     private String cartaoCredito;
 	private Double limiteCartaoCredito;
+    private TipoConta tipoConta;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cpf_cliente")
@@ -56,6 +57,14 @@ public abstract class Conta  {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public TipoConta getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
     }
 
     public abstract void sacar(Double valor) throws SaldoInsuficienteException;
