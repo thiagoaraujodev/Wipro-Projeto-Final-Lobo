@@ -12,60 +12,60 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ClienteDTO {
 
-    @Id
-    @Size(min = 11, max = 11, message = "O CPF deve conter 11 digitos!")
-    @CPF(message = "CPF inválido!")
-    private String cpf;
+	@Id
+	@Size(min = 11, max = 11, message = "O CPF deve conter 11 digitos!")
+	@CPF(message = "CPF inválido!")
+	private String cpf;
 
-    @NotBlank(message = "O nome não pode ser nulo ou vazio!")
-    private String nome;
+	@NotBlank(message = "O nome não pode ser nulo ou vazio!")
+	private String nome;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
 
-    @Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
-    @NotBlank(message = "O telefone não pode ser nulo ou vazio!")
-    private String telefone;
-    
-    private Double rendaMensal;
+	@Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
+	@NotBlank(message = "O telefone não pode ser nulo ou vazio!")
+	private String telefone;
 
-    public String getCpf() {
-        return cpf;
-    }
+	private Double rendaMensal;
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public Double getRendaMensal() {
-        return rendaMensal;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setRendaMensal(Double rendaMensal) {
-        this.rendaMensal = rendaMensal;
-    }
+	public Double getRendaMensal() {
+		return rendaMensal;
+	}
+
+	public void setRendaMensal(Double rendaMensal) {
+		this.rendaMensal = rendaMensal;
+	}
 }
