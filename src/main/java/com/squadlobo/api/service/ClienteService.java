@@ -43,7 +43,6 @@ public class ClienteService {
     	cliente.setTelefone(obj.getTelefone());
     	cliente.setRendaMensal(obj.getRendaMensal());
     	return clienteRepository.save(cliente);
-    	
     }
 
     public Cliente buscarCpf(String cpf) {
