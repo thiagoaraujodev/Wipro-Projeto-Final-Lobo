@@ -153,7 +153,7 @@ public class ContaService {
     }    
     
     public Conta create(ContaRequestDTO contaDTO) {
-        validarCpf(contaDTO.getCliente().getCpf());
+        localizaCpf(contaDTO.getCliente().getCpf());
         
         Conta novaConta = null;        
         if (contaDTO.getCliente().getRendaMensal() >= tetoContaEspecial) {

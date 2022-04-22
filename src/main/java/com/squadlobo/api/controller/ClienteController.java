@@ -58,7 +58,6 @@ public class ClienteController {
 	//	clienteService.delete(cpf);
 	//	return ResponseEntity.noContent().build();
 	//}
-
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -70,18 +69,7 @@ public class ClienteController {
 		});
 		return errors;
 	}
-	
-	@DeleteMapping("/{cpf}")/*mapeia a URL*/
-	@ResponseBody /*descrição da resposta*/
-	public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
-		clienteService.deletar(cpf);
-		return ResponseEntity.noContent().build();
-	}
 
-	@PutMapping("/{cpf}")/*mapeia a URL*/
-	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {/*recebe os dados para alteração*/
-		Cliente obj1 = clienteService.alterar(cpf, obj);/*faz alteração do cliente*/
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
-	}
+
 
 }

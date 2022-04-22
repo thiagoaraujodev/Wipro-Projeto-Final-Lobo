@@ -1,4 +1,4 @@
-package com.squadlobo.api.service.exceptions;
+package com.squadlobo.api.service;
 
 import com.squadlobo.api.model.*;
 import com.squadlobo.api.repository.ContaCorrenteRepository;
