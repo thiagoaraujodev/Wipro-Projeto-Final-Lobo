@@ -83,6 +83,7 @@ public class ContaService {
         movimentacaoRepository.save(movimentacao);
     }    
 
+    //metodo verifica a conta
     public Conta findById(String numeroConta) {
         return contaRepository.findById(numeroConta)
                 .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
@@ -103,7 +104,8 @@ public class ContaService {
         }
         return conta;
     }
-
+    
+    
     public Conta create(ContaRequestDTO contaDTO) {
         validarCpf(contaDTO.getCliente().getCpf());
         
