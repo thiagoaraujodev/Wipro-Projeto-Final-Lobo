@@ -24,5 +24,11 @@ public class ContaResponseDTO extends ContaRequestDTO {
         this.saldo = saldo;
     }
 
+    public TipoConta getTipoConta() {
+        return tipoConta;
+    }
 
+    public void setTipoConta(TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
+    }
 }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.squadlobo.api.model.ContaEspecial;
 
-
 @Repository
 public interface ContaEspecialRepository extends JpaRepository<ContaEspecial, String> {
 

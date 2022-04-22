@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ApiWiproApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ApiWiproApplication.class, args);
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(ApiWiproApplication.class, args);
+	}
 }

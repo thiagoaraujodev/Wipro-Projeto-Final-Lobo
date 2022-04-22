@@ -8,5 +8,5 @@ import com.squadlobo.api.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
 
-    Long countByCpf(String cpf);
+	Long countByCpf(String cpf);
 }
