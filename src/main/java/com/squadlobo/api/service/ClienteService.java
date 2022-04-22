@@ -19,11 +19,6 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarCpf(String cpf) {
-        return clienteRepository.findById(cpf)
-                .orElseThrow(() -> new NotFoundException("CPF: " + cpf + " não encontado!"));
-    }
-
 //    public Cliente create(Cliente obj) {
 //        return clienteRepository.save(obj);
 //    }
@@ -42,12 +37,16 @@ public class ClienteService {
     }
     
     public  Cliente alterar(String cpf, Cliente obj) {
-    	Cliente client = buscarCpf(cpf);
-    	client.setNome(obj.getNome());
-    	client.setDataNascimento(obj.getDataNascimento());
-    	client.setTelefone(obj.getTelefone());
-    	client.setRendaMensal(obj.getRendaMensal());
-    	return clienteRepository.save(client);
-    	
+    	Cliente cliente =  buscarCpf(cpf);
+    	cliente.setNome(obj.getNome());
+    	cliente.setDataNascimento(obj.getDataNascimento());
+    	cliente.setTelefone(obj.getTelefone());
+    	cliente.setRendaMensal(obj.getRendaMensal());
+    	return clienteRepository.save(cliente);
+    }
+
+    public Cliente buscarCpf(String cpf) {
+        return clienteRepository.findById(cpf)
+                .orElseThrow(() -> new NotFoundException("CPF: " + cpf + " não encontado!"));
     }
 }
