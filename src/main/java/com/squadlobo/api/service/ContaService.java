@@ -131,10 +131,7 @@ public class ContaService {
         movimentacaoRepository.save(movimentacao);
     }    
 
-    public Conta findById(String numeroConta) {
-        return contaRepository.findById(numeroConta)
-                .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
-    }
+
 
     public Conta recuperarConta(String numeroConta) {
         Conta conta = null;
@@ -153,7 +150,9 @@ public class ContaService {
     }    
     
     public Conta create(ContaRequestDTO contaDTO) {
-        localizaCpf(contaDTO.getCliente().getCpf());
+
+    	localizaCpf(contaDTO.getCliente().getCpf());
+
         
         Conta novaConta = null;        
         if (contaDTO.getCliente().getRendaMensal() >= tetoContaEspecial) {
