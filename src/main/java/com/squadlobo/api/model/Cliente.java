@@ -16,75 +16,75 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Cliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Size(min = 11, max = 11, message = "O CPF deve conter 11 digitos!")
-    @CPF(message = "CPF inválido!")
-    private String cpf;
+	@Id
+	@Size(min = 11, max = 11, message = "O CPF deve conter 11 digitos!")
+	@CPF(message = "CPF inválido!")
+	private String cpf;
 
-    @NotBlank(message = "O nome não pode ser nulo ou vazio!")
-    private String nome;
+	@NotBlank(message = "O nome não pode ser nulo ou vazio!")
+	private String nome;
 
-    @Column(nullable = false)
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
+	@Column(nullable = false)
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataNascimento;
 
-    @Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
-    @NotBlank(message = "O telefone não pode ser nulo ou vazio!")
-    private String telefone;
+	@Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
+	@NotBlank(message = "O telefone não pode ser nulo ou vazio!")
+	private String telefone;
 
-    @Column(nullable = false)
-    private Double rendaMensal;
+	@Column(nullable = false)
+	private Double rendaMensal;
 
-    public Cliente() {
-    }
+	public Cliente() {
+	}
 
-    public Cliente(String nome, String cpf, LocalDate dataNascimento, String telefone, Double rendaMensal) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.telefone = telefone;
-        this.rendaMensal = rendaMensal;
-    }
+	public Cliente(String nome, String cpf, LocalDate dataNascimento, String telefone, Double rendaMensal) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.telefone = telefone;
+		this.rendaMensal = rendaMensal;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public Double getRendaMensal() {
-        return rendaMensal;
-    }
+	public Double getRendaMensal() {
+		return rendaMensal;
+	}
 
-    public void setRendaMensal(Double rendaMensal) {
-        this.rendaMensal = rendaMensal;
-    }
+	public void setRendaMensal(Double rendaMensal) {
+		this.rendaMensal = rendaMensal;
+	}
 }

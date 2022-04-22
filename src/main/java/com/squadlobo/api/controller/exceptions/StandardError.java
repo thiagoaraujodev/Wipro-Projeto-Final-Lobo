@@ -1,13 +1,13 @@
 package com.squadlobo.api.controller.exceptions;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public class StandardError implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ZonedDateTime timestamp;
+	private LocalDateTime timestamp;
 	private Integer status;
 	private String error;
 	private String message;
@@ -16,11 +16,11 @@ public class StandardError implements Serializable {
 	public StandardError() {		
 	}
 
-	public ZonedDateTime getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(ZonedDateTime timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
