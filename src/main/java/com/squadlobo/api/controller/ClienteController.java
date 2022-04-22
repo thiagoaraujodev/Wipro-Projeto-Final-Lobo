@@ -12,14 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,7 +44,15 @@ public class ClienteController {
 		return ResponseEntity.ok().body(obj);
 	}
 
+<<<<<<< HEAD
 	
+=======
+	@PutMapping("/{cpf}")
+	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
+		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
+	}
+>>>>>>> e59c940e6d0e6507a41354154b34cae92b8856c5
 
 	//@DeleteMapping("/{cpf}")/*mapeia a URL*/
 	//@ResponseBody /*descrição da resposta*/
@@ -54,7 +60,10 @@ public class ClienteController {
 	//	clienteService.delete(cpf);
 	//	return ResponseEntity.noContent().build();
 	//}
+<<<<<<< HEAD
 
+=======
+>>>>>>> e59c940e6d0e6507a41354154b34cae92b8856c5
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -66,6 +75,7 @@ public class ClienteController {
 		});
 		return errors;
 	}
+<<<<<<< HEAD
 	
 	@DeleteMapping("/{cpf}")/*mapeia a URL*/
 	@ResponseBody /*descrição da resposta*/
@@ -80,4 +90,6 @@ public class ClienteController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
 	}
 
+=======
+>>>>>>> e59c940e6d0e6507a41354154b34cae92b8856c5
 }
