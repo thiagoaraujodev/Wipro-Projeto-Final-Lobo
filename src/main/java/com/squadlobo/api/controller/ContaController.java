@@ -41,10 +41,17 @@ public class ContaController {
 		return ResponseEntity.ok().body(list);
 	}
 
+<<<<<<< HEAD
+	@GetMapping("/{numeroConta}")
+	public ResponseEntity<Conta> GetById(@PathVariable @Valid String numeroConta) {
+		Conta obj = contaService.findById(numeroConta);
+		return ResponseEntity.ok(obj);
+=======
 	@PatchMapping("/saque/{numeroConta}")
 	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
 		contaService.sacar(numeroConta, movimentacao);
 		return ResponseEntity.ok().build();
+>>>>>>> 0e82c6b1b3d642c4ccc4f22edbada817e08c7dcf
 	}
 
 	@PatchMapping("/deposito/{numeroConta}")
