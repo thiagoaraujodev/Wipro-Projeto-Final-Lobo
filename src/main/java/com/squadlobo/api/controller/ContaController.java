@@ -43,32 +43,12 @@ public class ContaController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	
 	@GetMapping("/especial")
 	public ResponseEntity<List<ContaEspecial>> listarContasEspecial() {
 		List<ContaEspecial> list = contaService.listarContaEspecial();
 		return ResponseEntity.ok().body(list);
-  }
-
-
-	@GetMapping("/{numeroConta}")
-	public ResponseEntity<Conta> GetById(@PathVariable @Valid String numeroConta) {
-		Conta obj = contaService.findById(numeroConta);
-		return ResponseEntity.ok(obj);
-  }
-  
-	@PatchMapping("/saque/{numeroConta}")
-	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
-		contaService.sacar(numeroConta, movimentacao);
-		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/deposito/{numeroConta}")
-	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
-		contaService.depositar(numeroConta, movimentacao);
-		return ResponseEntity.ok().build();
-	}
-	
 	@GetMapping("/{numeroConta}")
 	public ResponseEntity<ContaResponseDTO> buscarConta(@PathVariable @Valid String numeroConta) {
 		Conta obj = contaService.buscarConta(numeroConta);
@@ -79,19 +59,21 @@ public class ContaController {
 	public ResponseEntity<ContaResponseDTO> criarConta(@RequestBody @Valid ContaRequestDTO conta) {
 		Conta contaNova = contaService.criarConta(conta);
 		ContaResponseDTO response = mapper.toContaResponseDto(contaNova);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{numeroConta}").buildAndExpand(contaNova.getNumeroConta())
-				.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{numeroConta}")
+				.buildAndExpand(contaNova.getNumeroConta()).toUri();
 		return ResponseEntity.created(uri).body(response);
 	}
 
 	@PatchMapping("/deposito/{numeroConta}")
-	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
+	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta,
+			@RequestBody @Valid MovimentacaoDTO movimentacao) {
 		contaService.depositar(numeroConta, movimentacao);
 		return ResponseEntity.ok().build();
 	}
 
 	@PatchMapping("/saque/{numeroConta}")
-	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
+	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta,
+			@RequestBody @Valid MovimentacaoDTO movimentacao) {
 		contaService.sacar(numeroConta, movimentacao);
 		return ResponseEntity.ok().build();
 	}
