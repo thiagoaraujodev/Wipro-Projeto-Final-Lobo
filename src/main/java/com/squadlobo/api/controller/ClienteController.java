@@ -46,11 +46,7 @@ public class ClienteController {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@PutMapping("/{cpf}")
-	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
-		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
-	}
+	
 
 	//@DeleteMapping("/{cpf}")/*mapeia a URL*/
 	//@ResponseBody /*descrição da resposta*/
@@ -80,7 +76,7 @@ public class ClienteController {
 
 	@PutMapping("/{cpf}")/*mapeia a URL*/
 	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {/*recebe os dados para alteração*/
-		Cliente obj1 = clienteService.alterar(cpf, obj);/*faz alteração do cliente*/
+		Cliente obj1 = clienteService.atualizarCliente(cpf, obj);/*faz alteração do cliente*/
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
 	}
 

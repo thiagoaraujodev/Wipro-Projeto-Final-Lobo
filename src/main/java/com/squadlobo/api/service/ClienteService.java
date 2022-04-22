@@ -41,13 +41,5 @@ public class ClienteService {
     	return clienteRepository.getById(cpf);
     }
     
-    public  Cliente alterar(String cpf, Cliente obj) {
-    	Cliente client = findById(cpf);
-    	client.setNome(obj.getNome());
-    	client.setDataNascimento(obj.getDataNascimento());
-    	client.setTelefone(obj.getTelefone());
-    	client.setRendaMensal(obj.getRendaMensal());
-    	return clienteRepository.save(client);
-    	
-    }
+   
 }
