@@ -1,9 +1,12 @@
 package com.squadlobo.api.dto;
 
+import com.squadlobo.api.model.TipoConta;
+
 public class ContaResponseDTO extends ContaRequestDTO {
 
     private String numeroConta;
     private Double saldo;
+    private TipoConta tipoConta;
 
     public String getNumeroConta() {
         return numeroConta;
@@ -19,5 +22,13 @@ public class ContaResponseDTO extends ContaRequestDTO {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public TipoConta getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(TipoConta tipoConta) {
+        this.tipoConta = tipoConta;
     }
 }
