@@ -12,10 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,16 +35,29 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@GetMapping
-	public ResponseEntity<List<Cliente>> GetAll() {
-		List<Cliente> list = clienteService.findAll();
+	public ResponseEntity<List<Cliente>> listarClientes() {
+		List<Cliente> list = clienteService.listarClientes();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/{cpf}")
-	public ResponseEntity<Cliente> GetById(@PathVariable @Valid String cpf) {
-		Cliente obj = clienteService.findById(cpf);
+	public ResponseEntity<Cliente> buscarCpf(@PathVariable @Valid String cpf) {
+		Cliente obj = clienteService.buscarCpf(cpf);
 		return ResponseEntity.ok().body(obj);
 	}
+
+	@PutMapping("/{cpf}")
+	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
+		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
+	}
+
+	//@DeleteMapping("/{cpf}")/*mapeia a URL*/
+	//@ResponseBody /*descrição da resposta*/
+	//public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
+	//	clienteService.delete(cpf);
+	//	return ResponseEntity.noContent().build();
+	//}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -53,16 +70,18 @@ public class ClienteController {
 		});
 		return errors;
 	}
-	//@DeleteMapping("/{cpf}")/*mapeia a URL*/
-	//@ResponseBody /*descrição da resposta*/
-	//public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
-	//	clienteService.delete(cpf);
-	//	return ResponseEntity.noContent().build();
-	//}
+	
+	@DeleteMapping("/{cpf}")/*mapeia a URL*/
+	@ResponseBody /*descrição da resposta*/
+	public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
+		clienteService.deletar(cpf);
+		return ResponseEntity.noContent().build();
+	}
 
-	//@PutMapping("/{cpf}")/*mapeia a URL*/
-	//public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {/*recebe os dados para alteração*/
-	//	Cliente obj1 = clienteService.update(cpf, obj);/*faz alteração do cliente*/
-	//	return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
-	//}
+	@PutMapping("/{cpf}")/*mapeia a URL*/
+	public ResponseEntity<Cliente> Put(@PathVariable String cpf, @RequestBody Cliente obj) {/*recebe os dados para alteração*/
+		Cliente obj1 = clienteService.alterar(cpf, obj);/*faz alteração do cliente*/
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
+	}
+
 }
