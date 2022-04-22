@@ -15,16 +15,25 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<Cliente> findAll() {
+    public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
 
-    public Cliente findById(String cpf) {
+    public Cliente buscarCpf(String cpf) {
         return clienteRepository.findById(cpf)
                 .orElseThrow(() -> new NotFoundException("CPF: " + cpf + " não encontado!"));
     }
 
-    public Cliente create(Cliente obj) {
+//    public Cliente create(Cliente obj) {
+//        return clienteRepository.save(obj);
+//    }
+    
+    public Cliente atualizarCliente(String cpf, Cliente obj) {
+    	Cliente cliente = buscarCpf(cpf);
+    	cliente.setNome(obj.getNome());
+    	cliente.setDataNascimento(obj.getDataNascimento());
+    	cliente.setTelefone(obj.getTelefone());
+    	cliente.setRendaMensal(obj.getRendaMensal());
         return clienteRepository.save(obj);
     }
     
