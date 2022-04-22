@@ -36,55 +36,6 @@ public class ContaController {
     @Autowired
     private ContaMapper mapper;
 
-<<<<<<< HEAD
-	@GetMapping("/corrente")
-	public ResponseEntity<List<ContaCorrente>> listarContacorrente() {
-		List<ContaCorrente> list = contaService.listarContacorrente();
-		return ResponseEntity.ok().body(list);
-	}
-
-	@GetMapping("/especial")
-	public ResponseEntity<List<ContaEspecial>> listarContasEspecial() {
-		List<ContaEspecial> list = contaService.listarContaEspecial();
-		return ResponseEntity.ok().body(list);
-	}
-
-	
-
-	@PatchMapping("/saque/{numeroConta}")
-	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta,
-			@RequestBody @Valid MovimentacaoDTO movimentacao) {
-		contaService.sacar(numeroConta, movimentacao);
-		return ResponseEntity.ok().build();
-
-	}
-
-	@PatchMapping("/deposito/{numeroConta}")
-	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta,
-			@RequestBody @Valid MovimentacaoDTO movimentacao) {
-		contaService.depositar(numeroConta, movimentacao);
-		return ResponseEntity.ok().build();
-	}
-
-	@GetMapping("/{numeroConta}")
-	public ResponseEntity<ContaResponseDTO> buscarConta(@PathVariable @Valid String numeroConta) {
-		Conta obj = contaService.buscarConta(numeroConta);
-		return ResponseEntity.ok(mapper.toContaResponseDto(obj));
-	}
-	
-
-	
-
-	@PostMapping
-	public ResponseEntity<ContaResponseDTO> criarConta(@RequestBody @Valid ContaRequestDTO conta) {
-		Conta contaNova = contaService.criarConta(conta);
-		ContaResponseDTO response = mapper.toContaResponseDto(contaNova);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{numeroConta}")
-				.buildAndExpand(contaNova.getNumeroConta()).toUri();
-		return ResponseEntity.created(uri).body(response);
-
-	}
-=======
     @GetMapping("/corrente")
     public ResponseEntity<List<ContaCorrente>> listarContacorrente() {
         List<ContaCorrente> list = contaService.listarContacorrente();
@@ -124,6 +75,5 @@ public class ContaController {
                 .toUri();
         return ResponseEntity.created(uri).body(response);
     }
->>>>>>> e59c940e6d0e6507a41354154b34cae92b8856c5
 
 }
