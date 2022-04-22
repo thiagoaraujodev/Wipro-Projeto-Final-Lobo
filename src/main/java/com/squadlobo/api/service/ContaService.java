@@ -131,10 +131,7 @@ public class ContaService {
         movimentacaoRepository.save(movimentacao);
     }    
 
-    public Conta findById(String numeroConta) {
-        return contaRepository.findById(numeroConta)
-                .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
-    }
+   
 
     public Conta recuperarConta(String numeroConta) {
         Conta conta = null;
