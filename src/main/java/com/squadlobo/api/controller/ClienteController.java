@@ -52,12 +52,12 @@ public class ClienteController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
 	}
 
-	 @DeleteMapping("/{cpf}")
-	 @ResponseBody
-	 public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {
-	 clienteService.deletar(cpf);
-	 return ResponseEntity.noContent().build();
-	 }
+	@DeleteMapping("/{cpf}")
+	@ResponseBody
+	public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {
+		clienteService.deletar(cpf);
+		return ResponseEntity.noContent().build();
+	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)

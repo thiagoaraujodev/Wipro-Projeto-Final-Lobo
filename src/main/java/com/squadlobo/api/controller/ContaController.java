@@ -70,24 +70,24 @@ public class ContaController {
 
 	@PatchMapping("/deposito/{numeroConta}")
 	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta,
-			@RequestBody @Valid MovimentacaoDTO movimentacao) {
+										  @RequestBody @Valid MovimentacaoDTO movimentacao) {
 		contaService.depositar(numeroConta, movimentacao);
 		return ResponseEntity.ok().build();
 	}
 
 	@PatchMapping("/saque/{numeroConta}")
 	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta,
-			@RequestBody @Valid MovimentacaoDTO movimentacao) {
+									  @RequestBody @Valid MovimentacaoDTO movimentacao) {
 		contaService.sacar(numeroConta, movimentacao);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PatchMapping("/tranferencia")
 	public ResponseEntity<Void> tranferir(@RequestBody @Valid TransferenciaDTO transferencia) {
 		contaService.tranferir(transferencia);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@GetMapping("/extrato/{numeroConta}")
 	public ResponseEntity<List<?>> buscarExtrato(@PathVariable @Valid String numeroConta) {
 		List<?> lista = contaService.buscarExtrato(numeroConta);
