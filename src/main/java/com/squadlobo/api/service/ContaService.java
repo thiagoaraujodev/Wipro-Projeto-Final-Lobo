@@ -1,6 +1,7 @@
 package com.squadlobo.api.service;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -39,31 +40,78 @@ public class ContaService {
     
     @Autowired
     private ClienteRepository clienteRepository;
+    
+    @Autowired
+    private ContaCorrenteRepository contaCorrenteRepository;
 
     @Autowired
     private ContaEspecialRepository contaEspecialRepository;
-
-    @Autowired
-    private ContaCorrenteRepository contaCorrenteRepository;
     
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
     @Autowired
     private ContaMapper mapper;
+    
+    
+    public List<ContaCorrente> listarContacorrente() {
+		return contaCorrenteRepository.findAll();
+	}    
+
+    public List<ContaEspecial> listarContaEspecial() {
+    	return contaEspecialRepository.findAll();
+    }    
+    
+    public Conta buscarConta(String numeroConta) {
+    	Conta conta = null;
+    	Optional<ContaCorrente> contaCorrente = contaCorrenteRepository.findById(numeroConta);
+    	if (contaCorrente.isPresent()) {
+    		conta = contaCorrente.get();
+    	} else {
+    		Optional<ContaEspecial> contaEspecial = contaEspecialRepository.findById(numeroConta);
+    		if (contaEspecial.isPresent()) {
+    			conta = contaEspecial.get();
+    		} else {
+    			throw new IllegalArgumentException("Conta: " + numeroConta + " não encontada!");
+    		}
+    	}
+    	return conta;
+    }
+    
+    public Conta criarConta(ContaRequestDTO contaDTO) {
+    	localizaCpf(contaDTO.getCliente().getCpf());
+    	
+    	Conta novaConta = null;        
+    	if (contaDTO.getCliente().getRendaMensal() >= tetoContaEspecial) {
+    		ContaEspecial contaEspecial = mapper.toContaEspecial(contaDTO);
+    		contaEspecial.setLimiteContaEspecial(gerarLimiteContaEspecial
+    				(contaDTO.getCliente().getRendaMensal()));
+    		contaEspecial.setLimiteUtilizado(0d);
+    		novaConta = contaEspecial;
+    		novaConta.setNumeroConta(gerarNumeroConta(contaEspecialRepository));
+    	} else {
+    		novaConta = mapper.toContaCorrente(contaDTO);
+    		novaConta.setNumeroConta(gerarNumeroConta(contaCorrenteRepository));
+    	}
+    	novaConta.setSaldo(0d);        
+    	novaConta.setCartaoCredito(gerarNumeroCartao());
+    	novaConta.setLimiteCartaoCredito(gerarLimiteCartao(contaDTO.getCliente().getRendaMensal()));
+    	contaRepository.save(novaConta);
+    	return novaConta;
+    }
+    
+    public void depositar(String numeroConta, MovimentacaoDTO deposito) {
+    	Conta conta = buscarConta(numeroConta);
+    	conta.depositar(deposito.getValor());
+    	contaRepository.save(conta);
+    	criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
+    }
 
     public void sacar(String numeroConta, MovimentacaoDTO saque) {
-        Conta conta = recuperarConta(numeroConta);
+        Conta conta = buscarConta(numeroConta);
         conta.sacar(saque.getValor());
         contaRepository.save(conta);
         criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
-    }
-
-    public void depositar(String numeroConta, MovimentacaoDTO deposito) {
-        Conta conta = recuperarConta(numeroConta);
-        conta.depositar(deposito.getValor());
-        contaRepository.save(conta);
-        criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
     }
 
     private void criarMovimentacao(Conta conta, TipoMovimentacao tipoMovimentacao, Double valor) {
@@ -83,7 +131,6 @@ public class ContaService {
         movimentacaoRepository.save(movimentacao);
     }    
 
-    //metodo verifica a conta
     public Conta findById(String numeroConta) {
         return contaRepository.findById(numeroConta)
                 .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
@@ -103,8 +150,7 @@ public class ContaService {
             }
         }
         return conta;
-    }
-    
+    }    
     
     public Conta create(ContaRequestDTO contaDTO) {
         validarCpf(contaDTO.getCliente().getCpf());
@@ -128,7 +174,7 @@ public class ContaService {
         return novaConta;
     }
 
-    private void validarCpf(String cpf) {
+    private void localizaCpf(String cpf) {
         if (clienteRepository.countByCpf(cpf) >= 1) {
             throw new NotFoundException("CPF já cadastrado!");
         }
@@ -153,8 +199,7 @@ public class ContaService {
         return limite;
     }
 
-    private String gerarNumeroCartao() {
-		
+    private String gerarNumeroCartao() {		
 		String numeracao = "55";
 		for (int i = 0; i < 14; i++) {
 			numeracao += Integer.toString(random.nextInt(9));
