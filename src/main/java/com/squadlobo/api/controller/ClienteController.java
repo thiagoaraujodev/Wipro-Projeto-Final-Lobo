@@ -35,16 +35,29 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	@GetMapping
-	public ResponseEntity<List<Cliente>> GetAll() {
-		List<Cliente> list = clienteService.findAll();
+	public ResponseEntity<List<Cliente>> listarClientes() {
+		List<Cliente> list = clienteService.listarClientes();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/{cpf}")
-	public ResponseEntity<Cliente> GetById(@PathVariable @Valid String cpf) {
-		Cliente obj = clienteService.findById(cpf);
+	public ResponseEntity<Cliente> buscarCpf(@PathVariable @Valid String cpf) {
+		Cliente obj = clienteService.buscarCpf(cpf);
 		return ResponseEntity.ok().body(obj);
 	}
+
+	@PutMapping("/{cpf}")
+	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
+		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
+	}
+
+	//@DeleteMapping("/{cpf}")/*mapeia a URL*/
+	//@ResponseBody /*descrição da resposta*/
+	//public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {/*recebe os dados para deletar*/
+	//	clienteService.delete(cpf);
+	//	return ResponseEntity.noContent().build();
+	//}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -70,4 +83,5 @@ public class ClienteController {
 		Cliente obj1 = clienteService.alterar(cpf, obj);/*faz alteração do cliente*/
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj1);
 	}
+
 }
