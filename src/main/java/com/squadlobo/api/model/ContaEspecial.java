@@ -1,12 +1,13 @@
 package com.squadlobo.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
-import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 
 @Entity
 public class ContaEspecial extends Conta {
