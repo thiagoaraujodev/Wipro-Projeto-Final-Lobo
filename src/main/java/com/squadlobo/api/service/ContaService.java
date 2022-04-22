@@ -131,10 +131,48 @@ public class ContaService {
         movimentacaoRepository.save(movimentacao);
     }    
 
-//    public Conta findById(String numeroConta) {
-//        return contaRepository.findById(numeroConta)
-//                .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
-//    }
+    public Conta findById(String numeroConta) {
+        return contaRepository.findById(numeroConta)
+                .orElseThrow(() -> new NotFoundException("Conta: " + numeroConta + " não encontada!"));
+    }
+
+    public Conta recuperarConta(String numeroConta) {
+        Conta conta = null;
+        Optional<ContaCorrente> contaCorrente = contaCorrenteRepository.findById(numeroConta);
+        if (contaCorrente.isPresent()) {
+            conta = contaCorrente.get();
+        } else {
+            Optional<ContaEspecial> contaEspecial = contaEspecialRepository.findById(numeroConta);
+            if (contaEspecial.isPresent()) {
+                conta = contaEspecial.get();
+            } else {
+                throw new IllegalArgumentException("Conta inexistente");
+            }
+        }
+        return conta;
+    }    
+    
+    public Conta create(ContaRequestDTO contaDTO) {
+        validarCpf(contaDTO.getCliente().getCpf());
+        
+        Conta novaConta = null;        
+        if (contaDTO.getCliente().getRendaMensal() >= tetoContaEspecial) {
+            ContaEspecial contaEspecial = mapper.toContaEspecial(contaDTO);
+            contaEspecial.setLimiteContaEspecial(gerarLimiteContaEspecial
+                    (contaDTO.getCliente().getRendaMensal()));
+            contaEspecial.setLimiteUtilizado(0.0);
+            novaConta = contaEspecial;
+            novaConta.setNumeroConta(gerarNumeroConta(contaEspecialRepository));
+        } else {
+            novaConta = mapper.toContaCorrente(contaDTO);
+            novaConta.setNumeroConta(gerarNumeroConta(contaCorrenteRepository));
+        }
+        novaConta.setSaldo(0d);        
+        novaConta.setCartaoCredito(gerarNumeroCartao());
+		novaConta.setLimiteCartaoCredito(gerarLimiteCartao(contaDTO.getCliente().getRendaMensal()));
+        contaRepository.save(novaConta);
+        return novaConta;
+    }
 
     private void localizaCpf(String cpf) {
         if (clienteRepository.countByCpf(cpf) >= 1) {

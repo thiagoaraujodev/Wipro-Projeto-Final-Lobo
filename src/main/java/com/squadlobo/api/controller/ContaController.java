@@ -42,11 +42,31 @@ public class ContaController {
 		List<ContaCorrente> list = contaService.listarContacorrente();
 		return ResponseEntity.ok().body(list);
 	}
+
 	
 	@GetMapping("/especial")
 	public ResponseEntity<List<ContaEspecial>> listarContasEspecial() {
 		List<ContaEspecial> list = contaService.listarContaEspecial();
 		return ResponseEntity.ok().body(list);
+  }
+
+
+	@GetMapping("/{numeroConta}")
+	public ResponseEntity<Conta> GetById(@PathVariable @Valid String numeroConta) {
+		Conta obj = contaService.findById(numeroConta);
+		return ResponseEntity.ok(obj);
+  }
+  
+	@PatchMapping("/saque/{numeroConta}")
+	public ResponseEntity<Void> sacar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
+		contaService.sacar(numeroConta, movimentacao);
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/deposito/{numeroConta}")
+	public ResponseEntity<Void> depositar(@PathVariable @Valid String numeroConta, @RequestBody @Valid MovimentacaoDTO movimentacao) {
+		contaService.depositar(numeroConta, movimentacao);
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/{numeroConta}")
@@ -54,7 +74,7 @@ public class ContaController {
 		Conta obj = contaService.buscarConta(numeroConta);
 		return ResponseEntity.ok(mapper.toContaResponseDto(obj));
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<ContaResponseDTO> criarConta(@RequestBody @Valid ContaRequestDTO conta) {
 		Conta contaNova = contaService.criarConta(conta);
