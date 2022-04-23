@@ -14,6 +14,7 @@ public abstract class Conta  {
     private String cartaoCredito;
 	private Double limiteCartaoCredito;
     private TipoConta tipoConta;
+    private Boolean ativo;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cpf_cliente")
@@ -70,5 +71,18 @@ public abstract class Conta  {
     public abstract void sacar(Double valor) throws SaldoInsuficienteException;
 
     public abstract void depositar(Double valor) throws DepositoInvalidoException;
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.setAtivo(Boolean.TRUE);
+    }
 
 }

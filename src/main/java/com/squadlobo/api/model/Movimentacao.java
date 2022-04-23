@@ -2,13 +2,7 @@ package com.squadlobo.api.model;
 
 import java.time.ZonedDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class Movimentacao {
@@ -19,6 +13,8 @@ public abstract class Movimentacao {
 
 	@Enumerated(EnumType.STRING)
 	private TipoMovimentacao tipoMovimentacao;
+
+	private Boolean ativo;
 
 	private Double valor;
 
@@ -56,4 +52,18 @@ public abstract class Movimentacao {
 	public void setDataHoraMovimentacao(ZonedDateTime dataHoraMovimentacao) {
 		this.dataHoraMovimentacao = dataHoraMovimentacao;
 	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		this.setAtivo(Boolean.TRUE);
+	}
+
 }
