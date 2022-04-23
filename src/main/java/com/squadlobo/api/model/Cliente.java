@@ -6,13 +6,18 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+@SQLDelete(sql = "UPDATE cliente SET ativo = false WHERE cpf = ?")
+@Where(clause = "ativo = true")
 @Entity
 public class Cliente implements Serializable {
 
@@ -36,6 +41,8 @@ public class Cliente implements Serializable {
 
 	@Column(nullable = false)
 	private Double rendaMensal;
+
+	private Boolean ativo;
 
 	public Cliente() {
 	}
@@ -86,5 +93,18 @@ public class Cliente implements Serializable {
 
 	public void setRendaMensal(Double rendaMensal) {
 		this.rendaMensal = rendaMensal;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	@PrePersist
+	public void prePersist() {
+		this.setAtivo(Boolean.TRUE);
 	}
 }

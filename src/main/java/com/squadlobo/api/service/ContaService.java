@@ -73,6 +73,11 @@ public class ContaService {
         return conta;
     }
 
+    public void deletarConta(String numeroConta) {
+        Conta conta = buscarConta(numeroConta);
+        contaRepository.delete(conta);
+    }
+
     public Conta criarConta(ContaRequestDTO contaDTO) {
         localizaCpf(contaDTO.getCliente().getCpf());
 
@@ -110,7 +115,7 @@ public class ContaService {
         criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
     }
 
-    public void tranferir(TransferenciaDTO transferencia ) {
+    public void tranferir(TransferenciaDTO transferencia) {
         Conta contaOrigem = buscarConta(transferencia.getNumeroContaOrigem());
         contaOrigem.sacar(transferencia.getValor());
         contaRepository.save(contaOrigem);
