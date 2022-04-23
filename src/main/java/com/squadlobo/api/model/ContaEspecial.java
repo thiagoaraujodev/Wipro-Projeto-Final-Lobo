@@ -3,11 +3,16 @@ package com.squadlobo.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
 import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+@SQLDelete(sql = "UPDATE conta_especial SET ativo = false WHERE numero_conta = ?")
+@Where(clause = "ativo = true")
 @Entity
 public class ContaEspecial extends Conta {
 
@@ -15,7 +20,7 @@ public class ContaEspecial extends Conta {
 	private Double limiteUtilizado;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "contaEspecial")
+	@OneToMany(mappedBy = "contaEspecial", cascade = CascadeType.ALL)
 	private List<MovimentacaoContaEspecial> movimentacoes;
 
 	public Double getLimiteContaEspecial() {
