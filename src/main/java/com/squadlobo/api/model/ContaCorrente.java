@@ -2,15 +2,20 @@ package com.squadlobo.api.model;
 
 import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
 import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+@SQLDelete(sql = "UPDATE conta_corrente SET ativo = false WHERE numero_conta = ?")
+@Where(clause = "ativo = true")
 @Entity
 public class ContaCorrente extends Conta {
 
-    @OneToMany(mappedBy = "contaCorrente")
+    @OneToMany(mappedBy = "contaCorrente", cascade = CascadeType.ALL)
     private List<MovimentacaoContaCorrente> movimentacoes;
 
     @Override

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -17,14 +18,14 @@ public class ClienteDTO {
 	@CPF(message = "CPF inválido!")
 	private String cpf;
 
-	@NotBlank(message = "O nome não pode ser nulo ou vazio!")
+	@NotNull(message = "O nome não pode ser nulo ou vazio!")
 	private String nome;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 
 	@Size(min = 10, max = 11, message = "O telefone deve conter 10 ou 11 digitos!")
-	@NotBlank(message = "O telefone não pode ser nulo ou vazio!")
+	@NotNull(message = "O telefone não pode ser nulo ou vazio!")
 	private String telefone;
 
 	private Double rendaMensal;
