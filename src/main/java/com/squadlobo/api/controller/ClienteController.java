@@ -54,7 +54,7 @@ public class ClienteController {
 
 	@DeleteMapping("/{cpf}")
 	@ResponseBody
-	public ResponseEntity<Cliente> Delete(@PathVariable String cpf) {
+	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
 		clienteService.deletar(cpf);
 		return ResponseEntity.noContent().build();
 	}

@@ -66,7 +66,6 @@ public class ContaService {
             if (contaEspecial.isPresent()) {
                 conta = contaEspecial.get();
             } else {
-//				throw new IllegalArgumentException("Conta: " + numeroConta + " não encontada!");
                 contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta não encontada!"));
             }
         }
@@ -140,7 +139,7 @@ public class ContaService {
                 List<MovimentacaoContaEspecial> lista = contaEspecial.get().getMovimentacoes();
                 return lista;
             } else {
-                throw new IllegalArgumentException("Está conta não possui movimentações!");
+                throw new ObjetoNaoEncontradoException("Está conta não possui movimentações!");
             }
         }
     }

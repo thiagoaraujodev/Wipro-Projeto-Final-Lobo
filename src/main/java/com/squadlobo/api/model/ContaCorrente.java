@@ -1,5 +1,6 @@
 package com.squadlobo.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
 import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 import org.hibernate.annotations.SQLDelete;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 public class ContaCorrente extends Conta {
 
+	@JsonIgnore
     @OneToMany(mappedBy = "contaCorrente", cascade = CascadeType.ALL)
     private List<MovimentacaoContaCorrente> movimentacoes;
 
