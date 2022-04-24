@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.squadlobo.api.dto.ClienteDTO;
 import com.squadlobo.api.model.Cliente;
 import com.squadlobo.api.service.ClienteService;
 
@@ -47,8 +48,8 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{cpf}")
-	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @Valid @RequestBody Cliente cliente) {
-		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
+	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable @Valid String cpf, @Valid @RequestBody ClienteDTO objDTO) {
+		ClienteDTO obj = new ClienteDTO(clienteService.atualizarCliente(cpf, objDTO));
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
 	}
 

@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.squadlobo.api.model.Cliente;
+import com.squadlobo.api.model.Movimentacao;
 
 public class ClienteDTO {
 
@@ -36,6 +38,20 @@ public class ClienteDTO {
 	@Min(value = 0, message = "O valor deve ser maior ou igual a 0")
 	@Column(nullable = false)
 	private Double rendaMensal;
+
+	
+	public ClienteDTO() {
+		super();
+	}
+	
+	public ClienteDTO(Cliente obj) {
+		super();
+		this.cpf = obj.getCpf();
+		this.nome = obj.getNome();
+		this.dataNascimento = obj.getDataNascimento();
+		this.telefone = obj.getTelefone();
+		this.rendaMensal = obj.getRendaMensal();
+	}	
 
 	public String getCpf() {
 		return cpf;
