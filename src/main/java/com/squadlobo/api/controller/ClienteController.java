@@ -47,7 +47,7 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{cpf}")
-	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @Valid @RequestBody Cliente cliente) {
 		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
 	}
