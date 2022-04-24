@@ -25,36 +25,37 @@ import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 @Service
 public class ContaService {
 
-    Random random = new Random();
+	Random random = new Random();
 
-    @Value("${wipro.banco.teto.conta.especial}")
-    private Double tetoContaEspecial;
+	@Value("${wipro.banco.teto.conta.especial}")
+	private Double tetoContaEspecial;
 
-    @Autowired
-    private ContaRepository contaRepository;
+	@Autowired
+	private ContaRepository contaRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
 
-    @Autowired
-    private ContaCorrenteRepository contaCorrenteRepository;
+	@Autowired
+	private ContaCorrenteRepository contaCorrenteRepository;
 
-    @Autowired
-    private ContaEspecialRepository contaEspecialRepository;
+	@Autowired
+	private ContaEspecialRepository contaEspecialRepository;
 
-    @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+	@Autowired
+	private MovimentacaoRepository movimentacaoRepository;
 
-    @Autowired
-    private ContaMapper mapper;
+	@Autowired
+	private ContaMapper mapper;
 
-    public List<ContaCorrente> listarContacorrente() {
-        return contaCorrenteRepository.findAll();
-    }
+	public List<ContaCorrente> listarContacorrente() {
+		return contaCorrenteRepository.findAll();
+	}
 
-    public List<ContaEspecial> listarContaEspecial() {
-        return contaEspecialRepository.findAll();
-    }
+	public List<ContaEspecial> listarContaEspecial() {
+		return contaEspecialRepository.findAll();
+	}
+
 
     public Conta buscarConta(String numeroConta) {
         Conta conta = null;

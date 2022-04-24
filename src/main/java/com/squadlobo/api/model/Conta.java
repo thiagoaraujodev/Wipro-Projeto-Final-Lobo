@@ -72,6 +72,7 @@ public abstract class Conta  {
 
     public abstract void depositar(Double valor) throws DepositoInvalidoException;
 
+
     public Boolean getAtivo() {
         return ativo;
     }
@@ -86,3 +87,6 @@ public abstract class Conta  {
     }
 
 }
+
+}
+

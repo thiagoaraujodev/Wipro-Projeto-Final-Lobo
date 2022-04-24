@@ -95,6 +95,7 @@ public class Cliente implements Serializable {
 		this.rendaMensal = rendaMensal;
 	}
 
+
 	public Boolean getAtivo() {
 		return ativo;
 	}
@@ -108,3 +109,6 @@ public class Cliente implements Serializable {
 		this.setAtivo(Boolean.TRUE);
 	}
 }
+
+}
+
