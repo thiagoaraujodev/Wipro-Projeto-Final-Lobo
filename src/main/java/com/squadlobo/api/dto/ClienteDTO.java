@@ -13,7 +13,6 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.squadlobo.api.model.Cliente;
-import com.squadlobo.api.model.Movimentacao;
 
 public class ClienteDTO {
 
