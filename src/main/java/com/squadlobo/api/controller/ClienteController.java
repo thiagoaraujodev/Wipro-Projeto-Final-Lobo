@@ -12,17 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.squadlobo.api.dto.ClienteDTO;
 import com.squadlobo.api.model.Cliente;
 import com.squadlobo.api.service.ClienteService;
 
@@ -47,9 +46,10 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{cpf}")
-	public ResponseEntity<Cliente> atualizarCliente(@PathVariable @Valid String cpf, @RequestBody Cliente cliente) {
-		Cliente obj = clienteService.atualizarCliente(cpf, cliente);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
+	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable @Valid String cpf, @Valid @RequestBody ClienteDTO objDTO) {
+		objDTO.setCpf(cpf);
+		ClienteDTO newObj = new ClienteDTO(clienteService.atualizarCliente(objDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(newObj);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
