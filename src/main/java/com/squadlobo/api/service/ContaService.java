@@ -1,5 +1,6 @@
 package com.squadlobo.api.service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -18,6 +19,7 @@ import com.squadlobo.api.repository.ClienteRepository;
 import com.squadlobo.api.repository.ContaCorrenteRepository;
 import com.squadlobo.api.repository.ContaEspecialRepository;
 import com.squadlobo.api.repository.ContaRepository;
+import com.squadlobo.api.repository.MovimentacaoRepository;
 import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 
 @Service
