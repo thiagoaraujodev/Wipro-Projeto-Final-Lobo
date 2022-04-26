@@ -25,37 +25,36 @@ import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 @Service
 public class ContaService {
 
-	Random random = new Random();
+    Random random = new Random();
 
-	@Value("${wipro.banco.teto.conta.especial}")
-	private Double tetoContaEspecial;
+    @Value("${wipro.banco.teto.conta.especial}")
+    private Double tetoContaEspecial;
 
-	@Autowired
-	private ContaRepository contaRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-	@Autowired
-	private ContaCorrenteRepository contaCorrenteRepository;
+    @Autowired
+    private ContaCorrenteRepository contaCorrenteRepository;
 
-	@Autowired
-	private ContaEspecialRepository contaEspecialRepository;
+    @Autowired
+    private ContaEspecialRepository contaEspecialRepository;
 
-	@Autowired
-	private MovimentacaoRepository movimentacaoRepository;
+    @Autowired
+    private MovimentacaoService movimentacaoService;
 
-	@Autowired
-	private ContaMapper mapper;
+    @Autowired
+    private ContaMapper mapper;
 
-	public List<ContaCorrente> listarContacorrente() {
-		return contaCorrenteRepository.findAll();
-	}
+    public List<ContaCorrente> listarContacorrente() {
+        return contaCorrenteRepository.findAll();
+    }
 
-	public List<ContaEspecial> listarContaEspecial() {
-		return contaEspecialRepository.findAll();
-	}
-
+    public List<ContaEspecial> listarContaEspecial() {
+        return contaEspecialRepository.findAll();
+    }
 
     public Conta buscarConta(String numeroConta) {
         Conta conta = null;
@@ -67,7 +66,7 @@ public class ContaService {
             if (contaEspecial.isPresent()) {
                 conta = contaEspecial.get();
             } else {
-                contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta não encontada!"));
+                contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta nao encontrada!"));
             }
         }
         return conta;
@@ -105,17 +104,17 @@ public class ContaService {
         Conta conta = buscarConta(numeroConta);
         conta.depositar(deposito.getValor());
         contaRepository.save(conta);
-        criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
+        movimentacaoService.criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
     }
 
     public void sacar(String numeroConta, MovimentacaoDTO saque) {
         Conta conta = buscarConta(numeroConta);
         conta.sacar(saque.getValor());
         contaRepository.save(conta);
-        criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
+        movimentacaoService.criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
     }
 
-    public void tranferir(TransferenciaDTO transferencia) {
+    public void transferir(TransferenciaDTO transferencia) {
         Conta contaOrigem = buscarConta(transferencia.getNumeroContaOrigem());
         contaOrigem.sacar(transferencia.getValor());
         contaRepository.save(contaOrigem);
@@ -124,8 +123,8 @@ public class ContaService {
         contaDestino.depositar(transferencia.getValor());
         contaRepository.save(contaDestino);
 
-        criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferencia.getValor());
-        criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, transferencia.getValor());
+        movimentacaoService.criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferencia.getValor());
+        movimentacaoService.criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, transferencia.getValor());
     }
 
     public List<?> buscarExtrato(String numeroConta) {
@@ -145,26 +144,10 @@ public class ContaService {
         }
     }
 
-    private void criarMovimentacao(Conta conta, TipoMovimentacao tipoMovimentacao, Double valor) {
-        Movimentacao movimentacao = null;
-        if (conta instanceof ContaCorrente) {
-            MovimentacaoContaCorrente mcc = new MovimentacaoContaCorrente();
-            mcc.setContaCorrente((ContaCorrente) conta);
-            movimentacao = mcc;
-        } else {
-            MovimentacaoContaEspecial mce = new MovimentacaoContaEspecial();
-            mce.setContaEspecial((ContaEspecial) conta);
-            movimentacao = mce;
-        }
-        movimentacao.setTipoMovimentacao(tipoMovimentacao);
-        movimentacao.setDataHoraMovimentacao(ZonedDateTime.now());
-        movimentacao.setValor(valor);
-        movimentacaoRepository.save(movimentacao);
-    }
 
     private void localizaCpf(String cpf) {
         if (clienteRepository.countByCpf(cpf) >= 1) {
-            throw new ObjetoNaoEncontradoException("CPF já cadastrado!");
+            throw new ObjetoNaoEncontradoException("CPF ja cadastrado!");
         }
     }
 
