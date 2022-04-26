@@ -12,14 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,15 +47,9 @@ public class ClienteController {
 
 	@PutMapping("/{cpf}")
 	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable @Valid String cpf, @Valid @RequestBody ClienteDTO objDTO) {
-		ClienteDTO obj = new ClienteDTO(clienteService.atualizarCliente(cpf, objDTO));
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
-	}
-
-	@DeleteMapping("/{cpf}")
-	@ResponseBody
-	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
-		clienteService.deletar(cpf);
-		return ResponseEntity.noContent().build();
+		objDTO.setCpf(cpf);
+		ClienteDTO newObj = new ClienteDTO(clienteService.atualizarCliente(objDTO));
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(newObj);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
