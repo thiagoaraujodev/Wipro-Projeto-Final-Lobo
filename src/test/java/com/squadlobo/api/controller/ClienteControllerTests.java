@@ -6,10 +6,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,6 +88,25 @@ public class ClienteControllerTests {
 		assertEquals(DATA_NASCIMENTO, response.getBody().getDataNascimento());
 		assertEquals(TELEFONE, response.getBody().getTelefone());
 		assertEquals(RENDA_CC, response.getBody().getRendaMensal());		
+	}
+	
+	@Test
+	void quandoAtualizarClienteRetorneSucesso() {
+		when(service.atualizarCliente(clienteDTO)).thenReturn(cliente);
+		
+		ResponseEntity<ClienteDTO> response = resource.atualizarCliente(CPF, clienteDTO);
+		
+		assertNotNull(response);
+		assertNotNull(response.getBody());
+		assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+		assertEquals(ResponseEntity.class, response.getClass());
+		assertEquals(ClienteDTO.class, response.getBody().getClass());
+		
+		assertEquals(CPF, response.getBody().getCpf());
+		assertEquals(NOME, response.getBody().getNome());
+		assertEquals(DATA_NASCIMENTO, response.getBody().getDataNascimento());
+		assertEquals(TELEFONE, response.getBody().getTelefone());
+		assertEquals(RENDA_CC, response.getBody().getRendaMensal());
 	}
 	
 	private void startUser() {
