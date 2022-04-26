@@ -1,7 +1,10 @@
 package com.squadlobo.api.controller.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +20,8 @@ import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 @SpringBootTest
 public class ControllerExceptionTests {
 
+	private static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
+	
 	@InjectMocks
 	private ControllerException controllerException;
 
@@ -28,15 +33,18 @@ public class ControllerExceptionTests {
 	@Test
 	void quandoObjetoNaoEncontradoRetorneResponseEntity() {
 		ResponseEntity<StandardError> response = controllerException.objetoNaoEncontradoException(
-				new ObjetoNaoEncontradoException("Objeto não encontrado"), new MockHttpServletRequest());
+				new ObjetoNaoEncontradoException(OBJETO_NAO_ENCONTRADO), new MockHttpServletRequest());
 
 		assertNotNull(response);
 		assertNotNull(response.getBody());
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 		assertEquals(ResponseEntity.class, response.getClass());
 		assertEquals(StandardError.class, response.getBody().getClass());
-		assertEquals("Not found", response.getBody().getError());
+		assertEquals(LocalDateTime.now(), response.getBody().getTimestamp());
 		assertEquals(404, response.getBody().getStatus());
+		assertEquals("Not found", response.getBody().getError());
+		assertEquals(OBJETO_NAO_ENCONTRADO, response.getBody().getMessage());
+		assertNotEquals("/cliente/2", response.getBody().getPath());
 	}
 
 }
