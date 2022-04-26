@@ -1,6 +1,5 @@
 package com.squadlobo.api.service;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -19,7 +18,6 @@ import com.squadlobo.api.repository.ClienteRepository;
 import com.squadlobo.api.repository.ContaCorrenteRepository;
 import com.squadlobo.api.repository.ContaEspecialRepository;
 import com.squadlobo.api.repository.ContaRepository;
-import com.squadlobo.api.repository.MovimentacaoRepository;
 import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 
 @Service
@@ -43,7 +41,7 @@ public class ContaService {
     private ContaEspecialRepository contaEspecialRepository;
 
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
+    private MovimentacaoService movimentacaoService;
 
     @Autowired
     private ContaMapper mapper;
@@ -66,7 +64,7 @@ public class ContaService {
             if (contaEspecial.isPresent()) {
                 conta = contaEspecial.get();
             } else {
-                contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta não encontada!"));
+                contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta nao encontrada!"));
             }
         }
         return conta;
@@ -104,17 +102,17 @@ public class ContaService {
         Conta conta = buscarConta(numeroConta);
         conta.depositar(deposito.getValor());
         contaRepository.save(conta);
-        criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
+        movimentacaoService.criarMovimentacao(conta, TipoMovimentacao.DEPOSITO, deposito.getValor());
     }
 
     public void sacar(String numeroConta, MovimentacaoDTO saque) {
         Conta conta = buscarConta(numeroConta);
         conta.sacar(saque.getValor());
         contaRepository.save(conta);
-        criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
+        movimentacaoService.criarMovimentacao(conta, TipoMovimentacao.SAQUE, saque.getValor());
     }
 
-    public void tranferir(TransferenciaDTO transferencia) {
+    public void transferir(TransferenciaDTO transferencia) {
         Conta contaOrigem = buscarConta(transferencia.getNumeroContaOrigem());
         contaOrigem.sacar(transferencia.getValor());
         contaRepository.save(contaOrigem);
@@ -123,8 +121,8 @@ public class ContaService {
         contaDestino.depositar(transferencia.getValor());
         contaRepository.save(contaDestino);
 
-        criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferencia.getValor());
-        criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, transferencia.getValor());
+        movimentacaoService.criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, transferencia.getValor());
+        movimentacaoService.criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, transferencia.getValor());
     }
 
     public List<?> buscarExtrato(String numeroConta) {
@@ -144,26 +142,10 @@ public class ContaService {
         }
     }
 
-    private void criarMovimentacao(Conta conta, TipoMovimentacao tipoMovimentacao, Double valor) {
-        Movimentacao movimentacao = null;
-        if (conta instanceof ContaCorrente) {
-            MovimentacaoContaCorrente mcc = new MovimentacaoContaCorrente();
-            mcc.setContaCorrente((ContaCorrente) conta);
-            movimentacao = mcc;
-        } else {
-            MovimentacaoContaEspecial mce = new MovimentacaoContaEspecial();
-            mce.setContaEspecial((ContaEspecial) conta);
-            movimentacao = mce;
-        }
-        movimentacao.setTipoMovimentacao(tipoMovimentacao);
-        movimentacao.setDataHoraMovimentacao(ZonedDateTime.now());
-        movimentacao.setValor(valor);
-        movimentacaoRepository.save(movimentacao);
-    }
 
     private void localizaCpf(String cpf) {
         if (clienteRepository.countByCpf(cpf) >= 1) {
-            throw new ObjetoNaoEncontradoException("CPF já cadastrado!");
+            throw new ObjetoNaoEncontradoException("CPF ja cadastrado!");
         }
     }
 

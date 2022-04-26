@@ -52,13 +52,6 @@ public class ClienteController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(obj);
 	}
 
-	@DeleteMapping("/{cpf}")
-	@ResponseBody
-	public ResponseEntity<Void> Delete(@PathVariable String cpf) {
-		clienteService.deletar(cpf);
-		return ResponseEntity.noContent().build();
-	}
-
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
