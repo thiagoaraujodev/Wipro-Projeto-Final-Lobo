@@ -38,10 +38,10 @@ public class ClienteControllerTests {
 	
 
 	@InjectMocks
-	private ClienteController resource;
+	private ClienteController clienteController;
 
 	@Mock
-	private ClienteService service;
+	private ClienteService clienteService;
 	
 	private Cliente cliente;
 	private ClienteDTO clienteDTO;
@@ -54,9 +54,9 @@ public class ClienteControllerTests {
 
 	@Test
 	void quandoListarClientesRetorneUmaListaDeClientes() {		
-		when(service.listarClientes()).thenReturn(List.of(cliente));
+		when(clienteService.listarClientes()).thenReturn(List.of(cliente));
 
-		ResponseEntity<List<Cliente>> response = resource.listarClientes();
+		ResponseEntity<List<Cliente>> response = clienteController.listarClientes();
 		
 		assertNotNull(response);
 		assertNotNull(response.getBody());
@@ -74,9 +74,9 @@ public class ClienteControllerTests {
 	
 	@Test
 	void quandoBuscarCpfRetorneSucesso() {
-		when(service.buscarCpf(anyString())).thenReturn(cliente);
+		when(clienteService.buscarCpf(anyString())).thenReturn(cliente);
 		
-		ResponseEntity<Cliente> response = resource.buscarCpf(CPF);
+		ResponseEntity<Cliente> response = clienteController.buscarCpf(CPF);
 		
 		assertNotNull(response);
 		assertNotNull(response.getBody());
@@ -92,9 +92,9 @@ public class ClienteControllerTests {
 	
 	@Test
 	void quandoAtualizarClienteRetorneSucesso() {
-		when(service.atualizarCliente(clienteDTO)).thenReturn(cliente);
+		when(clienteService.atualizarCliente(clienteDTO)).thenReturn(cliente);
 		
-		ResponseEntity<ClienteDTO> response = resource.atualizarCliente(CPF, clienteDTO);
+		ResponseEntity<ClienteDTO> response = clienteController.atualizarCliente(CPF, clienteDTO);
 		
 		assertNotNull(response);
 		assertNotNull(response.getBody());
