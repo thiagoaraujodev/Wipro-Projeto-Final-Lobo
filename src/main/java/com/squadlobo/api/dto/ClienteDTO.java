@@ -3,7 +3,6 @@ package com.squadlobo.api.dto;
 import java.time.LocalDate;
 
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -69,4 +68,5 @@ public class ClienteDTO {
 	public void setRendaMensal(Double rendaMensal) {
 		this.rendaMensal = rendaMensal;
 	}
+
 }

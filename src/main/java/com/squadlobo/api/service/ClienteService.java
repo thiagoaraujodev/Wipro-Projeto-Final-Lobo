@@ -33,8 +33,4 @@ public class ClienteService {
         return clienteRepository.save(obj);
     }
 
-    public void deletar(String cpf) {    	
-        clienteRepository.deleteById(cpf);
-    }
-
 }

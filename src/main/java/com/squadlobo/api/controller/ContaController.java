@@ -81,9 +81,9 @@ public class ContaController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PatchMapping("/tranferencia")
-	public ResponseEntity<Void> tranferir(@RequestBody @Valid TransferenciaDTO transferencia) {
-		contaService.tranferir(transferencia);
+	@PatchMapping("/transferencia")
+	public ResponseEntity<Void> transferir(@RequestBody @Valid TransferenciaDTO transferencia) {
+		contaService.transferir(transferencia);
 		return ResponseEntity.ok().build();
 	}
 
