@@ -110,5 +110,3 @@ public class Cliente implements Serializable {
 	}
 }
 
-}
-
