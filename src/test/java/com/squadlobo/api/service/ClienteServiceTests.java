@@ -35,6 +35,8 @@ public class ClienteServiceTests {
 	private static final String NOME = "Bryan Isaac";
 
 	private static final String CPF = "90584196229";
+	
+	private static final int INDEX = 0;
 
 	private static final String CPF_NAO_ENCONTRADO = "CPF não encontado!";
 
@@ -61,13 +63,13 @@ public class ClienteServiceTests {
 
 		assertNotNull(response);
 		assertEquals(1, response.size());
-		assertEquals(Cliente.class, response.get(0).getClass());
+		assertEquals(Cliente.class, response.get(INDEX).getClass());
 
-		assertEquals(CPF, response.get(0).getCpf());
-		assertEquals(NOME, response.get(0).getNome());
-		assertEquals(DATA_NASCIMENTO, response.get(0).getDataNascimento());
-		assertEquals(TELEFONE, response.get(0).getTelefone());
-		assertEquals(RENDA_CC, response.get(0).getRendaMensal());
+		assertEquals(CPF, response.get(INDEX).getCpf());
+		assertEquals(NOME, response.get(INDEX).getNome());
+		assertEquals(DATA_NASCIMENTO, response.get(INDEX).getDataNascimento());
+		assertEquals(TELEFONE, response.get(INDEX).getTelefone());
+		assertEquals(RENDA_CC, response.get(INDEX).getRendaMensal());
 	}
 
 	@Test
