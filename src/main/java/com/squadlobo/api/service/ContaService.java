@@ -70,7 +70,7 @@ public class ContaService {
 			if (contaEspecial.isPresent()) {
 				conta = contaEspecial.get();
 			} else {
-				contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta não encontada!"));
+				contaEspecial.orElseThrow(() -> new ObjetoNaoEncontradoException("Conta não encontrada!"));
 			}
 		}
 		return conta;

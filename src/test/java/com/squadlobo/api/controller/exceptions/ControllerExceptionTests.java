@@ -21,7 +21,7 @@ import com.squadlobo.api.service.exceptions.ObjetoNaoEncontradoException;
 public class ControllerExceptionTests {
 
 	private static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
-	
+
 	@InjectMocks
 	private ControllerException controllerException;
 

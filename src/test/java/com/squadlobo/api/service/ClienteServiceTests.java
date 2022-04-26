@@ -35,7 +35,7 @@ public class ClienteServiceTests {
 	private static final String NOME = "Bryan Isaac";
 
 	private static final String CPF = "90584196229";
-	
+
 	private static final int INDEX = 0;
 
 	private static final String CPF_NAO_ENCONTRADO = "CPF não encontado!";
@@ -90,7 +90,7 @@ public class ClienteServiceTests {
 	@Test
 	void quandoBuscarCpfRetorneUmObjetoNaoEncontradoException() {
 		when(clienteRepository.findById(anyString())).thenThrow(new ObjetoNaoEncontradoException(CPF_NAO_ENCONTRADO));
-		
+
 		ObjetoNaoEncontradoException objetoNaoEncontradoException = assertThrows(ObjetoNaoEncontradoException.class,
 				() -> clienteService.buscarCpf(CPF));
 		assertEquals(CPF_NAO_ENCONTRADO, objetoNaoEncontradoException.getLocalizedMessage());
@@ -115,7 +115,7 @@ public class ClienteServiceTests {
 	@Test
 	void quandoAtualizarClienteRetorneUmObjetoNaoEncontradoException() {
 		when(clienteRepository.save(any())).thenReturn(new ObjetoNaoEncontradoException(CPF_NAO_ENCONTRADO));
-		
+
 		ObjetoNaoEncontradoException objetoNaoEncontradoException = assertThrows(ObjetoNaoEncontradoException.class,
 				() -> clienteService.atualizarCliente(clienteDTO));
 		assertEquals(CPF_NAO_ENCONTRADO, objetoNaoEncontradoException.getLocalizedMessage());

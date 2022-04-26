@@ -17,12 +17,6 @@ import com.squadlobo.api.repository.MovimentacaoRepository;
 @Service
 public class MovimentacaoService {
 
-//	@Autowired
-//	private ContaEspecialRepository contaEspecialRepository;
-//
-//	@Autowired
-//	private ContaCorrenteRepository contaCorrenteRepository;
-
 	@Autowired
 	private MovimentacaoRepository movimentacaoRepository;
 	
