@@ -39,7 +39,7 @@ public class ClienteServiceTests {
 	private static final String CPF_NAO_ENCONTRADO = "CPF não encontado!";
 
 	@InjectMocks
-	private ClienteService service;
+	private ClienteService clienteService;
 
 	@Mock
 	private ClienteRepository clienteRepository;
@@ -57,7 +57,7 @@ public class ClienteServiceTests {
 	void quandoListarClientesRetorneUmaListaDeClientes() {
 		when(clienteRepository.findAll()).thenReturn(List.of(cliente));
 
-		List<Cliente> response = service.listarClientes();
+		List<Cliente> response = clienteService.listarClientes();
 
 		assertNotNull(response);
 		assertEquals(1, response.size());
@@ -71,10 +71,10 @@ public class ClienteServiceTests {
 	}
 
 	@Test
-	void quandoBuscarCpfRetorneUmCliente() {
+	void quandoBuscarCpfRetorneSucesso() {
 		when(clienteRepository.findById(anyString())).thenReturn(Optional.of(cliente));
 
-		Cliente response = service.buscarCpf(CPF);
+		Cliente response = clienteService.buscarCpf(CPF);
 
 		assertNotNull(response);
 		assertEquals(Cliente.class, response.getClass());
@@ -90,7 +90,7 @@ public class ClienteServiceTests {
 		when(clienteRepository.findById(anyString())).thenThrow(new ObjetoNaoEncontradoException(CPF_NAO_ENCONTRADO));
 		
 		ObjetoNaoEncontradoException objetoNaoEncontradoException = assertThrows(ObjetoNaoEncontradoException.class,
-				() -> service.buscarCpf(CPF));
+				() -> clienteService.buscarCpf(CPF));
 		assertEquals(CPF_NAO_ENCONTRADO, objetoNaoEncontradoException.getLocalizedMessage());
 	}
 
@@ -99,7 +99,7 @@ public class ClienteServiceTests {
 		when(clienteRepository.findById(anyString())).thenReturn(Optional.of(cliente));
 		when(clienteRepository.save(any())).thenReturn(cliente);
 
-		Cliente response = service.atualizarCliente(clienteDTO);
+		Cliente response = clienteService.atualizarCliente(clienteDTO);
 
 		assertNotNull(response);
 		assertEquals(Cliente.class, response.getClass());
@@ -115,7 +115,7 @@ public class ClienteServiceTests {
 		when(clienteRepository.save(any())).thenReturn(new ObjetoNaoEncontradoException(CPF_NAO_ENCONTRADO));
 		
 		ObjetoNaoEncontradoException objetoNaoEncontradoException = assertThrows(ObjetoNaoEncontradoException.class,
-				() -> service.atualizarCliente(clienteDTO));
+				() -> clienteService.atualizarCliente(clienteDTO));
 		assertEquals(CPF_NAO_ENCONTRADO, objetoNaoEncontradoException.getLocalizedMessage());
 	}
 
