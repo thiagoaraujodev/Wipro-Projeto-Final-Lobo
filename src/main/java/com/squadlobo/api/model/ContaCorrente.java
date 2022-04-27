@@ -17,29 +17,33 @@ import java.util.List;
 public class ContaCorrente extends Conta {
 
 	@JsonIgnore
-    @OneToMany(mappedBy = "contaCorrente", cascade = CascadeType.ALL)
-    private List<MovimentacaoContaCorrente> movimentacoes;
+	@OneToMany(mappedBy = "contaCorrente", cascade = CascadeType.ALL)
+	private List<MovimentacaoContaCorrente> movimentacoes;
 
-    @Override
-    public void sacar(Double valor) throws SaldoInsuficienteException {
-        if (getSaldo() >= valor) {
-            Double novoSaldo = getSaldo() - valor;
-            setSaldo(novoSaldo);
-        } else {
-            throw new SaldoInsuficienteException();
-        }
-    }
+	@Override
+	public void sacar(Double valor) throws SaldoInsuficienteException {
+		if (valor > 0 && valor <= getSaldo()) {
+			Double novoSaldo = getSaldo() - valor;
+			setSaldo(novoSaldo);
+		} else {
+			throw new SaldoInsuficienteException("Saque inválido!");
+		}
+	}
 
-    @Override
-    public void depositar(Double valor) throws DepositoInvalidoException {
-        setSaldo(getSaldo() + valor);
-    }
+	@Override
+	public void depositar(Double valor) throws DepositoInvalidoException {
+		if (valor > 0) {
+			setSaldo(getSaldo() + valor);
+		} else {
+			throw new DepositoInvalidoException("Depósito inválido!");
+		}
+	}
 
-    public List<MovimentacaoContaCorrente> getMovimentacoes() {
-        return movimentacoes;
-    }
+	public List<MovimentacaoContaCorrente> getMovimentacoes() {
+		return movimentacoes;
+	}
 
-    public void setMovimentacoes(List<MovimentacaoContaCorrente> movimentacoes) {
-        this.movimentacoes = movimentacoes;
-    }
+	public void setMovimentacoes(List<MovimentacaoContaCorrente> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 }
