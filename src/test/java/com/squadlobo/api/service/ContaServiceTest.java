@@ -98,7 +98,6 @@ class ContaServiceTest {
 	@Test
 	void deveSubirUmaExeceptionQuandoCpfEstiverSendoUtilizado() {
 		ContaRequestDTO conta = criarContaRequesteDTO(2000D);
-		Optional<ContaRequestDTO> c = Optional.of(conta);
 		when(clienteRepository.countByCpf("05384973609")).thenReturn(1l);
 		ObjetoNaoEncontradoException objetoNaoEncontradoException = assertThrows(ObjetoNaoEncontradoException.class,
 				() -> contaService.criarConta(conta));
