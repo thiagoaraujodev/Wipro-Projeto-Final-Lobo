@@ -1,15 +1,17 @@
 package com.squadlobo.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
-import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.List;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.squadlobo.api.model.exceptions.DepositoInvalidoException;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 
 @SQLDelete(sql = "UPDATE conta_especial SET ativo = false WHERE numero_conta = ?")
 @Where(clause = "ativo = true")
@@ -49,36 +51,40 @@ public class ContaEspecial extends Conta {
 
 	@Override
 	public void sacar(Double valor) throws SaldoInsuficienteException {
-		if (valor <= getSaldo()) {
+		if (valor > 0 && valor <= getSaldo()) {
 			setSaldo(getSaldo() - valor);
-		} else if (valor <= (getSaldo() + (limiteContaEspecial - limiteUtilizado))) {
+		} else if (valor > 0 && valor <= (getSaldo() + (limiteContaEspecial - limiteUtilizado))) {
 			limiteUtilizado += (valor - getSaldo());
 			setSaldo(getSaldo() - limiteUtilizado);
 		} else {
-			throw new SaldoInsuficienteException();
+			throw new SaldoInsuficienteException("Saque inválido!");
 		}
 	}
 
 	@Override
 	public void depositar(Double valor) throws DepositoInvalidoException {
-		// atualiza o valor que ira para o saldo e o que ira
-		// reconstituir o limite de credito entra no if se
-		// o cliente estiver utilizando o limite de credito
-		if (limiteUtilizado > 0) {
-			// se o valor depositado for menor ou igual ao limite utilizado
-			// nenhum valor ira compor o saldo [valor = 0] e todo o valor
-			// depositado serah removido do limite utilizado
-			if (valor <= limiteUtilizado) {
-				limiteUtilizado -= valor;
-				valor = 0d;
-			} else {
-				// remove do valor depositado a quantidade que estava sendo
-				// utilizada no limite e zera o limite utilizado
-				valor -= limiteUtilizado;
-				limiteUtilizado = 0d;
+		if (valor > 0) {
+			// atualiza o valor que ira para o saldo e o que ira
+			// reconstituir o limite de credito entra no if se
+			// o cliente estiver utilizando o limite de credito
+			if (limiteUtilizado > 0) {
+				// se o valor depositado for menor ou igual ao limite utilizado
+				// nenhum valor ira compor o saldo [valor = 0] e todo o valor
+				// depositado serah removido do limite utilizado
+				if (valor <= limiteUtilizado) {
+					limiteUtilizado -= valor;
+					valor = 0d;
+				} else {
+					// remove do valor depositado a quantidade que estava sendo
+					// utilizada no limite e zera o limite utilizado
+					valor -= limiteUtilizado;
+					limiteUtilizado = 0d;
+				}
 			}
+			setSaldo(getSaldo() + valor);
+		} else {
+			throw new DepositoInvalidoException("Depósito inválido!");
 		}
-		setSaldo(getSaldo() + valor);
 	}
 
 }
