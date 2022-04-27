@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -40,7 +38,6 @@ public class ControllerExceptionTests {
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 		assertEquals(ResponseEntity.class, response.getClass());
 		assertEquals(StandardError.class, response.getBody().getClass());
-		assertEquals(LocalDateTime.now(), response.getBody().getTimestamp());
 		assertEquals(404, response.getBody().getStatus());
 		assertEquals("Not found", response.getBody().getError());
 		assertEquals(OBJETO_NAO_ENCONTRADO, response.getBody().getMessage());
