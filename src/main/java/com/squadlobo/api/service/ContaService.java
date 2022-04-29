@@ -20,6 +20,7 @@ import com.squadlobo.api.model.MovimentacaoContaCorrente;
 import com.squadlobo.api.model.MovimentacaoContaEspecial;
 import com.squadlobo.api.model.TipoConta;
 import com.squadlobo.api.model.TipoMovimentacao;
+import com.squadlobo.api.model.exceptions.SaldoInsuficienteException;
 import com.squadlobo.api.repository.ClienteRepository;
 import com.squadlobo.api.repository.ContaCorrenteRepository;
 import com.squadlobo.api.repository.ContaEspecialRepository;
@@ -119,18 +120,22 @@ public class ContaService {
 	}
 
 	public void tranferir(TransferenciaDTO transferencia) {
-		Conta contaOrigem = buscarConta(transferencia.getNumeroContaOrigem());
-		contaOrigem.sacar(transferencia.getValor());
-		contaRepository.save(contaOrigem);
+		if (transferencia.getNumeroContaOrigem().equals(transferencia.getNumeroContaDestino())) {
+			throw new SaldoInsuficienteException("Operação inválida!");
+		} else {
+			Conta contaOrigem = buscarConta(transferencia.getNumeroContaOrigem());
+			contaOrigem.sacar(transferencia.getValor());
+			contaRepository.save(contaOrigem);
 
-		Conta contaDestino = buscarConta(transferencia.getNumeroContaDestino());
-		contaDestino.depositar(transferencia.getValor());
-		contaRepository.save(contaDestino);
+			Conta contaDestino = buscarConta(transferencia.getNumeroContaDestino());
+			contaDestino.depositar(transferencia.getValor());
+			contaRepository.save(contaDestino);
 
-		movimentacaoService.criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA,
-				transferencia.getValor());
-		movimentacaoService.criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA,
-				transferencia.getValor());
+			movimentacaoService.criarMovimentacao(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA,
+					transferencia.getValor());
+			movimentacaoService.criarMovimentacao(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA,
+					transferencia.getValor());
+		}
 	}
 
 	public List<?> buscarExtrato(String numeroConta) {
