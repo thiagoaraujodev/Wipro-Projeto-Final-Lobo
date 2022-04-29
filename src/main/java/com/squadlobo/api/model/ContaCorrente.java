@@ -26,7 +26,7 @@ public class ContaCorrente extends Conta {
 			Double novoSaldo = getSaldo() - valor;
 			setSaldo(novoSaldo);
 		} else {
-			throw new SaldoInsuficienteException("Saque inválido!");
+			throw new SaldoInsuficienteException("Operação inválida!");
 		}
 	}
 
@@ -35,7 +35,7 @@ public class ContaCorrente extends Conta {
 		if (valor > 0) {
 			setSaldo(getSaldo() + valor);
 		} else {
-			throw new DepositoInvalidoException("Depósito inválido!");
+			throw new DepositoInvalidoException("Operação inválida!");
 		}
 	}
 
