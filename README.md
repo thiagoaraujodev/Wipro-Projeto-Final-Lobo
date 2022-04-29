@@ -12,7 +12,7 @@
 
 A **Wipro** está revolucionando e trazendo uma novidade para os seus clientes. O desafio será elaborar uma aplicação que faça o **gerenciamento de conta bancária**, permitindo que sejam feitas as operações de criação, consulta e remoção, além das operações de saque, depósito e essa conta também deverá ter um cartão de crédito.
 
-O projeto será desenvolvido em três sprints. Cada etapa deve ser entregue em um repositório público no Github.
+O projeto será desenvolvido em três sprints.
 
 ## Grupo 9 - Squad Lobo 🐺‍
 
@@ -28,7 +28,7 @@ Integrantes:
 
 ## 📰 Organização do Projeto
 
-Na etapa inicial definimos todos os entregáveis previstos definidos na primeira sprint. Já na segunda sprint, desenvolvemos uma API para acesso via Web substituindo a interface console utilizada na primeira etapa com todas as operações anteriores incluídas nesta API.
+Na etapa inicial definimos todos os entregáveis previstos definidos na primeira sprint. Já na segunda sprint, desenvolvemos uma API para acesso via Web substituindo a interface console utilizada na primeira etapa com todas as operações anteriores incluídas nesta API. Na terceira sprint, inserimos os testes unitários com o Junit.
 
 Entre as principais etapas planejadas a partir da primeira sprint, optamos por:
 
@@ -80,7 +80,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é responsável por fazer a criação de uma conta a partir das informações pessoais do cliente informada nos parâmetros requeridos. Se todos os dados informados forem validos, o cliente é inserido no sistema e atribuímos uma conta. Caso a renda mensal informada pelo cliente seja menor que R$: 2.000,00 será atribuida uma conta do tipo conta corrente e caso seja maior ou igual a este valor uma conta especial será atribuída com um valor de limite especial de 10% sobre a renda informada.
 
-![Cria o Cliente e uma Conta](.github/criar_conta.png "Cria o Cliente e uma Conta")
+![Cria o Cliente e uma Conta](.github/conta_cliente.gif "Cria o Cliente e uma Conta")
 
 ---
 
@@ -92,7 +92,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir todas as contas com suas informações definidas pelo tipo conta corrente. Caso não tenha nehuma conta definida no sistema ele retorna um array vazio.
 
-![Exibe Todas as Contas Corrente](.github/contas_corrente.png "Exibe Todas as Contas Corrente")
+![Exibe Todas as Contas Corrente](.github/contas_corrente.gif "Exibe Todas as Contas Corrente")
 
 ---
 
@@ -105,7 +105,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir todas as contas com suas informações definidas pelo tipo conta especial. Caso não tenha nehuma conta definida no sistema ele retorna um array vazio.
 
-![Exibe Todas as Contas Especiais](.github/conta_especial.png "Exibe Todas as Contas Especiais")
+![Exibe Todas as Contas Especiais](.github/conta_especial.gif "Exibe Todas as Contas Especiais")
 
 ---
 
@@ -117,7 +117,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir as informações de uma conta definida em sua rota pelo número da conta. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Conta não encontrada!".
 
-![Exibe Dados da Conta](.github/conta_numero_conta.png "Exibe Dados da Conta")
+![Exibe Dados da Conta](.github/conta_numero_conta.gif "Exibe Dados da Conta")
 
 ---
 
@@ -129,7 +129,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir as informações de movimentações efetuadas em uma conta, definida em sua rota pelo número da conta. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Está conta não possui movimentações!".
 
-![Exibe as Movimentações da Conta](.github/extrato.png "Exibe as Movimentações da Conta")
+![Exibe as Movimentações da Conta](.github/extrato.gif "Exibe as Movimentações da Conta")
 
 ---
 
@@ -141,7 +141,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por efetuar um depósto em uma conta definida em sua rota pelo número da conta, atribuindo como parâmetro o valor do depósito atualizando o saldo da conta informada. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Conta não encontrada!".
 
-![Efetua Depósito](.github/deposito.png "Efetua Depósito")
+![Efetua Depósito](.github/deposito.gif "Efetua Depósito")
 
 ---
 
@@ -153,7 +153,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por efetuar um saque em uma conta definida em sua rota pelo número da conta, atribuindo como parâmetro o valor do saque atualizando o saldo da conta informada desde que contenha saldo disponível na conta. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Conta não encontrada!".
 
-![Efetua Saque](.github/saque.png "Efetua Saque")
+![Efetua Saque](.github/saque.gif "Efetua Saque")
 
 ---
 
@@ -165,7 +165,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por efetuar um transferência entre contas definindo seus atributos como parâmetro o número da conta de origem, o número da conta de destino e o valor da transferência, atualizando o saldo da conta de origem desde que contenha saldo disponível na conta para concluir a operação e atualizando o saldo da conta de destino. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Conta não encontrada!".
 
-![Efetua Transferência Entre Contas](.github/transferencia.png "Efetua Transferência Entre Contas")
+![Efetua Transferência Entre Contas](.github/transferencia.gif "Efetua Transferência Entre Contas")
 
 ---
 
@@ -178,7 +178,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por deletar "desativar" uma conta, definida em sua rota pelo número da conta. Caso a conta solicitada não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "Conta não encontrada!".
 
-![Deleta Conta / Desativa](.github/deletar_conta.png "Deleta Conta / Desativa")
+![Deleta Conta / Desativa](.github/deletar_conta.gif "Deleta Conta / Desativa")
 
 ---
 
@@ -190,7 +190,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir todos os clientes com suas informações. Caso não tenha nehuma conta definida no sistema ele retorna um array vazio.
 
-![Exibe Todos os Clientes](.github/clientes.png "Exibe Todos os Clientes")
+![Exibe Todos os Clientes](.github/clientes.gif "Exibe Todos os Clientes")
 
 ---
 
@@ -202,7 +202,7 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por exibir as informações de um cliente definida em sua rota pelo número do CPF. Caso o CPF informado não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "CPF não encontado!".
 
-![Exibe Cliente Pelo CPF](.github/cliente.png "Exibe Cliente Pelo CPF")
+![Exibe Cliente Pelo CPF](.github/cliente_cpf.gif "Exibe Cliente Pelo CPF")
 
 ---
 
@@ -214,9 +214,20 @@ Para um melhor entendimento de como utilizar a API desenvolvida neste projeto, d
 
 - Este endpoint é respónsvel por atualizar as informações de um cliente definida em sua rota pelo número do CPF, repassando seus atributos como nome, data de nascimento, telefone, renda mensal, e o cpf também deve ser informado como parâmetro e consequentemente tem que ser o mesmo cpf definido na rota. Caso o CPF informado não exista no sistema, será devolvido um erro personalizado com status 404 Not Found, com uma mensagem de "CPF não encontado!".
 
-![Atualizar Cliente](.github/clienete_atualizar.png "Atualizar Cliente")
+![Atualizar Cliente](.github/cliente_atualizar.gif "Atualizar Cliente")
 
 ---
+
+## 🚀🚀🚀 Plano de execução - Sprint 3
+
+Nesta etapa inserimos alguns testes unitários utilizando o Junit5 e o Mockito. Estabelecemos como meta inicial a cobertura de 50% dos métodos e conseguimos alcançar 69,4%. Todos sabemos que é necessário testar, e com a ajuda do Mockito temos uma ótima ferramenta para isso, pois, temos a possibilidade de isolar comportamentos e testar pequenas partes que se torna uma grande estratégia para garantir a qualidade do código.
+
+![Testes Unitários](.github/teste_unitario.png "Testes Unitários")
+
+
+## Slide apresentação final
+
+🐺‍‍ [Slide Apresentação](https://www.canva.com/design/DAE_HEmPBC8/_5x6G1VSrd6KrIHKY0HQdg/view?utm_content=DAE_HEmPBC8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ## ⚙️ Como inicializar a aplicação
 
@@ -239,7 +250,7 @@ Para inicializar é muito simples:
 6. Altere as informações correspondente com os seu dados de acesso ao MySql:
 
 ```
-// Altere o nome SuaPorta para o número da sua porta de acesso
+// Altere o nome SuaPorta para o número da sua porta de acesso do Tomcat. Ex.:8080
 server.port=${DB_PORT:SuaPorta}
 
 // Altere o nome SeuUsuario pelo nome de usuário do seu MySql
