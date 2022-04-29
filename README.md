@@ -225,7 +225,7 @@ Nesta etapa inserimos alguns testes unitários utilizando o Junit5 e o Mockito. 
 ![Testes Unitários](.github/teste_unitario.png "Testes Unitários")
 
 
-## Slide apresentação final
+## 📣 Slide apresentação final
 
 🐺‍‍ [Slide Apresentação](https://www.canva.com/design/DAE_HEmPBC8/_5x6G1VSrd6KrIHKY0HQdg/view?utm_content=DAE_HEmPBC8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
